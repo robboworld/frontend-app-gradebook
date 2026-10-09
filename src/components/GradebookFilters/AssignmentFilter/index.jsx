@@ -1,10 +1,12 @@
 /* eslint-disable react/sort-comp, react/button-has-type */
+// Modifications Copyright (C) 2026 Robbo. See NOTICE at repository root.
 import React from 'react';
 import PropTypes from 'prop-types';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import messages from '../messages';
+import robboMessages from 'robbo/messages';
 import SelectGroup from '../SelectGroup';
 import useAssignmentFilterData from './hooks';
 
@@ -29,7 +31,7 @@ const AssignmentFilter = ({ updateQueryParams }) => {
         onChange={handleChange}
         disabled={assignmentFilterOptions.length === 0}
         options={[
-          <option key="0" value="">All</option>,
+          <option key="0" value="">{formatMessage(robboMessages.allOption)}</option>,
           ...filterOptions,
         ]}
       />

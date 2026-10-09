@@ -1,0 +1,16 @@
+Robbo Open edX — frontend-app-gradebook override
+==================================================
+
+This repository is a Robbo fork/override of Open edX frontend-app-gradebook
+(the course gradebook for the course team).
+Upstream: https://github.com/openedx/frontend-app-gradebook .
+
+Modifications and Robbo-specific files (including src/robbo/,
+src/i18n/robbo-overrides/ and files marked in copyright headers) are:
+
+  Copyright (C) 2026 Robbo <https://robbo.ru>
+
+Licensed under the GNU Affero General Public License v3.0-only. See LICENSE.
+
+For corresponding source matching a deployed Robbo gradebook instance, see the
+offer published with that service (for example https://skill.robbo.ru).

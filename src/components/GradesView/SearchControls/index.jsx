@@ -1,3 +1,4 @@
+// Modifications Copyright (C) 2026 Robbo. See NOTICE at repository root.
 import React from 'react';
 
 import { SearchField } from '@openedx/paragon';
@@ -15,6 +16,7 @@ export const SearchControls = () => {
     searchValue,
     inputLabel,
     hintText,
+    screenReaderText,
   } = useSearchControlsData();
 
   return (
@@ -22,6 +24,7 @@ export const SearchControls = () => {
       <SearchField
         onSubmit={onSubmit}
         inputLabel={inputLabel}
+        screenReaderText={screenReaderText}
         onBlur={onBlur}
         onClear={onClear}
         value={searchValue}

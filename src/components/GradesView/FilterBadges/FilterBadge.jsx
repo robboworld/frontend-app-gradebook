@@ -1,3 +1,4 @@
+// Modifications Copyright (C) 2026 Robbo. See NOTICE at repository root.
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -5,6 +6,7 @@ import { Button } from '@openedx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { selectors } from 'data/redux/hooks';
+import robboMessages from 'robbo/messages';
 
 /**
  * FilterBadge
@@ -38,7 +40,7 @@ export const FilterBadge = ({
         </span>
         <Button
           className="btn-info"
-          aria-label="close"
+          aria-label={formatMessage(robboMessages.removeFilter)}
           onClick={handleClose(connectedFilters)}
         >
           <span aria-hidden="true">&times;</span>

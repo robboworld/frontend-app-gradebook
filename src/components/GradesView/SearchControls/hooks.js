@@ -1,7 +1,9 @@
+// Modifications Copyright (C) 2026 Robbo. See NOTICE at repository root.
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { actions, selectors, thunkActions } from 'data/redux/hooks';
 
+import robboMessages from 'robbo/messages';
 import messages from './messages';
 
 /**
@@ -35,6 +37,11 @@ export const useSearchControlsData = () => {
     searchValue,
     inputLabel: formatMessage(messages.label),
     hintText: formatMessage(messages.hint),
+    screenReaderText: {
+      label: formatMessage(robboMessages.searchLabel),
+      submitButton: formatMessage(robboMessages.searchSubmit),
+      clearButton: formatMessage(robboMessages.searchClear),
+    },
   };
 };
 

@@ -48,7 +48,12 @@ pull_translations:
 	           translations/paragon/src/i18n/messages:paragon \
 	           translations/frontend-app-gradebook/src/i18n/messages:frontend-app-gradebook
 
-	$(intl_imports) frontend-platform paragon frontend-component-header frontend-component-footer frontend-app-gradebook
+	# Robbo: our catalog goes last so it overrides Atlas strings.
+	mkdir -p $(i18n)/messages/robbo-custom
+	cp $(i18n)/robbo-overrides/en.json $(i18n)/messages/robbo-custom/en.json
+	cp $(i18n)/robbo-overrides/ru.json $(i18n)/messages/robbo-custom/ru.json
+
+	$(intl_imports) frontend-platform paragon frontend-component-header frontend-component-footer frontend-app-gradebook robbo-custom
 
 # This target is used by CI.
 validate-no-uncommitted-package-lock-changes:

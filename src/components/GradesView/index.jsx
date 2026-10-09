@@ -1,4 +1,5 @@
 /* eslint-disable react/sort-comp, react/button-has-type, import/no-named-as-default */
+// Modifications Copyright (C) 2026 Robbo. See NOTICE at repository root.
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -54,7 +55,7 @@ export const GradesView = ({ updateQueryParams }) => {
       <GradebookTable />
 
       <PageButtons />
-      <p>* {mastersHint}</p>
+      {mastersHint && <p>* {mastersHint}</p>}
       <EditModal />
 
       <ImportSuccessToast />
