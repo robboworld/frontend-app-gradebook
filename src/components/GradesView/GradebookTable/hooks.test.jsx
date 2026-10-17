@@ -1,3 +1,4 @@
+// Modifications Copyright (C) 2026 Robbo. See NOTICE at repository root.
 import { shallow } from '@edx/react-unit-test-utils';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
@@ -8,6 +9,7 @@ import { getLocalizedPercentSign } from 'i18n/utils';
 import { selectors } from 'data/redux/hooks';
 import transforms from 'data/redux/transforms';
 import { Headings } from 'data/constants/grades';
+import useHasMastersTrack from 'robbo/useHasMastersTrack';
 import LabelReplacements from './LabelReplacements';
 import Fields from './Fields';
 import GradeButton from './GradeButton';
@@ -39,6 +41,7 @@ jest.mock('data/redux/hooks', () => ({
 jest.mock('data/redux/transforms', () => ({
   grades: { roundGrade: jest.fn() },
 }));
+jest.mock('robbo/useHasMastersTrack', () => jest.fn());
 
 const roundGrade = grade => grade * 20;
 transforms.grades.roundGrade.mockImplementation(roundGrade);
@@ -54,7 +57,7 @@ const allGrades = [
     username: 'test-username-1',
     external_user_key: 'EKey1',
     email: 'email-1',
-    fullName: 'test-fullNAME',
+    full_name: 'test-fullNAME',
     percent: 0.9,
     section_breakdown: [
       { label: subsectionLabels[0] },
@@ -95,6 +98,7 @@ const headings = [
 ];
 selectors.grades.useAllGrades.mockReturnValue(allGrades);
 selectors.root.useGetHeadings.mockReturnValue(headings);
+useHasMastersTrack.mockReturnValue(true);
 
 let out;
 describe('useGradebookTableData', () => {
@@ -109,6 +113,7 @@ describe('useGradebookTableData', () => {
     it('initializes redux hooks', () => {
       expect(selectors.grades.useAllGrades).toHaveBeenCalled();
       expect(selectors.root.useGetHeadings).toHaveBeenCalled();
+      expect(useHasMastersTrack).toHaveBeenCalled();
     });
   });
   describe('output', () => {
@@ -120,26 +125,29 @@ describe('useGradebookTableData', () => {
           shallow(<LabelReplacements.TotalGradeLabelReplacement />),
         );
       });
-      test('username heading produces UsernameLabelReplacement', () => {
+      test('username heading produces UsernameLabelReplacement in master\'s track courses', () => {
         const { Header, accessor } = out.columns[1];
         expect(accessor).toEqual(headings[1]);
         expect(shallow(Header)).toMatchObject(
           shallow(<LabelReplacements.UsernameLabelReplacement />),
         );
       });
+      // Robbo: the Student Key exists only in master's track courses.
+      test('username heading is plain text without a master\'s track', () => {
+        useHasMastersTrack.mockReturnValueOnce(false);
+        const { Header } = useGradebookTableData().columns[1];
+        expect(Header).toEqual(formatMessage(messages.usernameHeading));
+      });
+      // Robbo: email and full name come for every learner, without the master's track asterisk.
       test('email heading replaces with email heading message', () => {
         const { Header, accessor } = out.columns[2];
         expect(accessor).toEqual(headings[2]);
-        expect(shallow(Header)).toMatchObject(
-          shallow(<LabelReplacements.MastersOnlyLabelReplacement {...messages.emailHeading} />),
-        );
+        expect(Header).toEqual(formatMessage(messages.emailHeading));
       });
       test('fullName heading replaces with fullName heading message', () => {
         const { Header, accessor } = out.columns[3];
         expect(accessor).toEqual(headings[3]);
-        expect(shallow(Header)).toMatchObject(
-          shallow(<LabelReplacements.MastersOnlyLabelReplacement {...messages.fullNameHeading} />),
-        );
+        expect(Header).toEqual(formatMessage(messages.fullNameHeading));
       });
       test('other headings are passed through', () => {
         const { Header, accessor } = out.columns[4];
@@ -161,6 +169,14 @@ describe('useGradebookTableData', () => {
             <Fields.Text value={entry.email} />,
           );
         });
+      });
+      test('fullName field, empty when the learner has none', () => {
+        allGrades.forEach((entry, index) => {
+          expect(out.data[index][Headings.fullName]).toMatchObject(
+            <Fields.Text value={entry.full_name || ''} />,
+          );
+        });
+        expect(out.data[1][Headings.fullName]).toMatchObject(<Fields.Text value="" />);
       });
       test('totalGrade field', () => {
         allGrades.forEach((entry, index) => {
