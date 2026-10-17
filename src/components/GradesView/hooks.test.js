@@ -1,7 +1,9 @@
+// Modifications Copyright (C) 2026 Robbo. See NOTICE at repository root.
 import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { formatMessage } from 'testUtils';
 import { actions, thunkActions } from 'data/redux/hooks';
+import useHasMastersTrack from 'robbo/useHasMastersTrack';
 
 import useGradesViewData from './hooks';
 import messages from './messages';
@@ -15,10 +17,14 @@ jest.mock('data/redux/hooks', () => ({
   },
 }));
 
+jest.mock('robbo/useHasMastersTrack', () => jest.fn());
+
 const fetchGrades = jest.fn();
 thunkActions.grades.useFetchGrades.mockReturnValue(fetchGrades);
 const resetFilters = jest.fn();
 actions.filters.useResetFilters.mockReturnValue(resetFilters);
+
+useHasMastersTrack.mockReturnValue(true);
 
 const updateQueryParams = jest.fn();
 
@@ -35,6 +41,7 @@ describe('useGradesViewData', () => {
     it('initializes redux hooks', () => {
       expect(thunkActions.grades.useFetchGrades).toHaveBeenCalled();
       expect(actions.filters.useResetFilters).toHaveBeenCalled();
+      expect(useHasMastersTrack).toHaveBeenCalled();
     });
   });
   describe('output', () => {
@@ -44,6 +51,11 @@ describe('useGradesViewData', () => {
     });
     test('mastersHint', () => {
       expect(out.mastersHint).toEqual(formatMessage(messages.mastersHint));
+    });
+    // Robbo: the footnote explains the Student Key asterisk of master's track courses only.
+    test('no mastersHint without a master\'s track', () => {
+      useHasMastersTrack.mockReturnValueOnce(false);
+      expect(useGradesViewData({ updateQueryParams }).mastersHint).toEqual(null);
     });
     describe('handleFilterBadgeClose', () => {
       it('resets filters locally and in query params, and fetches grades', () => {

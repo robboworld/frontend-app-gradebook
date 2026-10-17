@@ -16,7 +16,7 @@ exports[`FilterBadge render do not hide value snapshot 1`] = `
       : a common value
     </span>
     <Button
-      aria-label="close"
+      aria-label="Remove filter"
       className="btn-info"
       onClick={
         {
@@ -52,7 +52,7 @@ exports[`FilterBadge render hide Value snapshot 1`] = `
       data-testid="filter-value"
     />
     <Button
-      aria-label="close"
+      aria-label="Remove filter"
       className="btn-info"
       onClick={
         {

@@ -1,3 +1,4 @@
+// Modifications Copyright (C) 2026 Robbo. See NOTICE at repository root.
 import React from 'react';
 import { shallow } from '@edx/react-unit-test-utils';
 import { useIntl } from '@edx/frontend-platform/i18n';
@@ -5,6 +6,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { formatMessage } from 'testUtils';
 import { Button } from '@openedx/paragon';
 import { selectors } from 'data/redux/hooks';
+import robboMessages from 'robbo/messages';
 import FilterBadge from './FilterBadge';
 
 jest.mock('@openedx/paragon', () => ({
@@ -54,6 +56,12 @@ describe('FilterBadge', () => {
     const testCloseButton = () => {
       test('close button forwards close method', () => {
         expect(el.instance.findByType(Button)[0].props.onClick).toEqual(handleClose(hookProps.connectedFilters));
+      });
+      // Robbo: a translatable label instead of the hardcoded «close».
+      test('close button label', () => {
+        expect(el.instance.findByType(Button)[0].props['aria-label']).toEqual(
+          formatMessage(robboMessages.removeFilter),
+        );
       });
     };
     test('empty render if isDefault', () => {
