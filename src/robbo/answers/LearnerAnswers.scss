@@ -1,0 +1,187 @@
+// Copyright (C) 2026 Robbo <https://robbo.ru>
+// SPDX-License-Identifier: AGPL-3.0-only
+// Part of the Robbo Open edX MFE overrides. See NOTICE at repository root.
+//
+// «Ответы» tab of the grade modal (LearnerAnswers.jsx). Desktop-first: label and value side by
+// side; below sm they stack.
+
+$robbo-answers-gap: map-get($spacers, 3);
+$robbo-answers-gap-sm: map-get($spacers, 2);
+$robbo-answers-hit-size: 44px;
+$robbo-answers-mark-size: 1.25rem; // Paragon <Icon size="sm">
+
+// ModalHeaders float their items: the tabs start below them.
+.robbo-grade-modal__tabs {
+  clear: both;
+  padding-top: $robbo-answers-gap;
+
+  + .tab-content {
+    padding-top: $robbo-answers-gap;
+  }
+}
+
+.robbo-grade-modal__answers-only {
+  clear: both;
+  padding-top: $robbo-answers-gap;
+}
+
+.robbo-answers__loading {
+  display: flex;
+  justify-content: center;
+  padding: map-get($spacers, 5) 0;
+}
+
+.robbo-answers__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: $robbo-answers-gap-sm $robbo-answers-gap;
+  margin-bottom: $robbo-answers-gap;
+}
+
+.robbo-answers__summary,
+.robbo-answers__switch {
+  margin: 0;
+}
+
+.robbo-answers__empty,
+.robbo-answers__note {
+  margin: 0;
+  color: $gray-700;
+}
+
+.robbo-answers__list,
+.robbo-answers__questions {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.robbo-answers__list {
+  display: grid;
+  gap: $robbo-answers-gap;
+}
+
+.robbo-answers__problem {
+  display: grid;
+  gap: $robbo-answers-gap-sm;
+  min-width: 0;
+  padding: $robbo-answers-gap;
+  border: $border-width solid $border-color;
+  border-radius: $border-radius;
+}
+
+.robbo-answers__problem-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: $robbo-answers-gap-sm $robbo-answers-gap;
+}
+
+.robbo-answers__problem-title {
+  min-width: 0;
+}
+
+.robbo-answers__unit {
+  margin: 0;
+  font-size: $font-size-sm;
+  color: $gray-700;
+}
+
+.robbo-answers__name {
+  margin: 0;
+  font-size: $h4-font-size;
+  overflow-wrap: anywhere;
+}
+
+.robbo-answers__problem-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $robbo-answers-gap-sm $robbo-answers-gap;
+  font-size: $font-size-sm;
+  color: $gray-700;
+}
+
+.robbo-answers__question {
+  padding: $robbo-answers-gap-sm 0;
+
+  + .robbo-answers__question {
+    border-top: $border-width solid $border-color;
+  }
+}
+
+.robbo-answers__question-text {
+  margin: 0 0 $robbo-answers-gap-sm;
+  overflow-wrap: anywhere;
+}
+
+.robbo-answers__values {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: $robbo-answers-gap-sm $robbo-answers-gap;
+  margin: 0;
+
+  dt {
+    font-weight: $font-weight-normal;
+    color: $gray-700;
+  }
+
+  dd {
+    margin: 0;
+  }
+
+  @include media-breakpoint-down(xs) {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 0;
+
+    dd + dt {
+      margin-top: $robbo-answers-gap-sm;
+    }
+  }
+}
+
+.robbo-answers__value {
+  display: flex;
+  align-items: flex-start;
+  gap: $robbo-answers-gap-sm;
+  min-width: 0;
+}
+
+// Long texts and code answers keep their line breaks and never widen the modal.
+.robbo-answers__value-text {
+  min-width: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+// The mark column is there on every value, so the answers line up with or without an icon;
+// one line high, so the icon sits on the first line of a long answer.
+.robbo-answers__value-mark {
+  display: flex;
+  flex: none;
+  align-items: center;
+  width: $robbo-answers-mark-size;
+  height: $line-height-base * 1em;
+}
+
+.robbo-answers__value-icon--correct {
+  color: $success;
+}
+
+.robbo-answers__value-icon--incorrect {
+  color: $danger;
+}
+
+.robbo-answers__value-icon--partially-correct {
+  color: $warning-700;
+}
+
+.robbo-answers__link {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  min-height: $robbo-answers-hit-size;
+}

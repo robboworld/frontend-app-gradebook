@@ -1,3 +1,4 @@
+// Modifications Copyright (C) 2026 Robbo. See NOTICE at repository root.
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -8,7 +9,6 @@ import transforms from 'data/redux/transforms';
 import * as module from './GradeButton';
 
 export const useGradeButtonData = ({ entry, subsection }) => {
-  const areGradesFrozen = selectors.assignmentTypes.useAreGradesFrozen();
   const { gradeFormat } = selectors.grades.useGradeData();
   const setModalState = thunkActions.app.useSetModalStateFromTable();
   const label = transforms.grades.subsectionGrade({ gradeFormat, subsection })();
@@ -21,7 +21,6 @@ export const useGradeButtonData = ({ entry, subsection }) => {
   };
 
   return {
-    areGradesFrozen,
     label,
     onClick,
   };
@@ -32,26 +31,21 @@ export const useGradeButtonData = ({ entry, subsection }) => {
  * The button link for a user's grade for a given subseciton.
  * load formatting based on selected grade format, and on click, opens
  * the editModal, loading in the current entry and subsection.
+ * Robbo: frozen grades open it too: the modal then shows only the learner's answers.
  * @param {object} entry - user's grade entry
  * @param {object} subsection - user's subsection grade from subsection_breakdown
  */
 export const GradeButton = ({ entry, subsection }) => {
-  const {
-    areGradesFrozen,
-    label,
-    onClick,
-  } = module.useGradeButtonData({ entry, subsection });
-  return areGradesFrozen
-    ? label
-    : (
-      <Button
-        variant="link"
-        className="btn-header grade-button"
-        onClick={onClick}
-      >
-        {label}
-      </Button>
-    );
+  const { label, onClick } = module.useGradeButtonData({ entry, subsection });
+  return (
+    <Button
+      variant="link"
+      className="btn-header grade-button"
+      onClick={onClick}
+    >
+      {label}
+    </Button>
+  );
 };
 GradeButton.propTypes = {
   subsection: PropTypes.shape({

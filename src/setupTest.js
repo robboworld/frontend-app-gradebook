@@ -35,6 +35,10 @@ jest.mock('@edx/frontend-component-footer', () => ({
 jest.mock('@openedx/paragon/icons', () => ({
   FilterAlt: 'FilterAlt',
   Close: 'Close',
+  // Robbo: answers in the grade modal (src/robbo/answers).
+  Cancel: 'Cancel',
+  CheckCircle: 'CheckCircle',
+  Error: 'Error',
 }));
 
 jest.mock('@openedx/paragon', () => jest.requireActual('testUtils').mockNestedComponents({
@@ -80,12 +84,15 @@ jest.mock('@openedx/paragon', () => jest.requireActual('testUtils').mockNestedCo
     Header: 'ModalDialog.Header',
     Hero: 'ModalDialog.Hero',
     Footer: 'ModalDialog.Footer',
+    Title: 'ModalDialog.Title',
   },
   OverlayTrigger: 'OverlayTrigger',
   Row: 'Row',
   SearchField: 'SearchField',
   Spinner: 'Spinner',
   StatefulButton: 'StatefulButton',
+  Tab: 'Tab',
+  Tabs: 'Tabs',
   Toast: 'Toast',
 
   useCheckboxSetValues: () => jest.fn().mockImplementation((values) => ([values, {

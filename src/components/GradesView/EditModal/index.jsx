@@ -1,3 +1,4 @@
+// Modifications Copyright (C) 2026 Robbo. See NOTICE at repository root.
 import React from 'react';
 
 import {
@@ -5,12 +6,17 @@ import {
   Alert,
   ModalDialog,
   ActionRow,
+  Tab,
+  Tabs,
 } from '@openedx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
+import LearnerAnswers from 'robbo/answers/LearnerAnswers';
+import robboMessages from 'robbo/answers/messages';
+
 import OverrideTable from './OverrideTable';
 import ModalHeaders from './ModalHeaders';
-import useEditModalData from './hooks';
+import useEditModalData, { modalTabs } from './hooks';
 import messages from './messages';
 
 /**
@@ -21,6 +27,9 @@ import messages from './messages';
  * (with appropriate headers) for managing the actual override, and a submit button for
  * adjusting the grade.
  * (also provides a close button that clears the modal state)
+ *
+ * Robbo: the learner's answers to the problems of the unit come first, on their own tab; with
+ * frozen grades they are all the modal shows.
  */
 export const EditModal = () => {
   const { formatMessage } = useIntl();
@@ -29,37 +38,64 @@ export const EditModal = () => {
     error,
     handleAdjustedGradeClick,
     isOpen,
+    areGradesFrozen,
+    activeTab,
+    setActiveTab,
   } = useEditModalData();
+  const isOverrideTab = !areGradesFrozen && activeTab === modalTabs.override;
+  const title = formatMessage(areGradesFrozen ? robboMessages.answersTitle : robboMessages.modalTitle);
 
   return (
     <ModalDialog
-      title={formatMessage(messages.title)}
+      title={title}
       isOpen={isOpen}
       onClose={onClose}
       size="xl"
       hasCloseButton
       isFullscreenOnMobile
     >
+      {/* Robbo: a header keeps the close button out of the scrolled list of answers. */}
+      <ModalDialog.Header>
+        <ModalDialog.Title>{title}</ModalDialog.Title>
+      </ModalDialog.Header>
       <ModalDialog.Body>
         <div>
           <ModalHeaders />
-          <Alert variant="danger" show={!!error} dismissible={false}>
-            {error}
-          </Alert>
-          <OverrideTable />
-          <div>{formatMessage(messages.visibility)}</div>
-          <div>{formatMessage(messages.saveVisibility)}</div>
+          {areGradesFrozen ? (
+            <div className="robbo-grade-modal__answers-only"><LearnerAnswers /></div>
+          ) : (
+            <Tabs
+              id="robbo-grade-modal-tabs"
+              className="robbo-grade-modal__tabs"
+              activeKey={activeTab}
+              onSelect={setActiveTab}
+            >
+              <Tab eventKey={modalTabs.answers} title={formatMessage(robboMessages.answersTab)}>
+                <LearnerAnswers />
+              </Tab>
+              <Tab eventKey={modalTabs.override} title={formatMessage(robboMessages.overrideTab)}>
+                <Alert variant="danger" show={!!error} dismissible={false}>
+                  {error}
+                </Alert>
+                <OverrideTable />
+                <div>{formatMessage(messages.visibility)}</div>
+                <div>{formatMessage(messages.saveVisibility)}</div>
+              </Tab>
+            </Tabs>
+          )}
         </div>
       </ModalDialog.Body>
 
       <ModalDialog.Footer>
         <ActionRow>
           <ModalDialog.CloseButton variant="tertiary">
-            {formatMessage(messages.closeText)}
+            {formatMessage(isOverrideTab ? messages.closeText : robboMessages.close)}
           </ModalDialog.CloseButton>
-          <Button variant="primary" onClick={handleAdjustedGradeClick}>
-            {formatMessage(messages.saveGrade)}
-          </Button>
+          {isOverrideTab && (
+            <Button variant="primary" onClick={handleAdjustedGradeClick}>
+              {formatMessage(messages.saveGrade)}
+            </Button>
+          )}
         </ActionRow>
       </ModalDialog.Footer>
     </ModalDialog>
