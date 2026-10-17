@@ -1,0 +1,220 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Answer wrong answer with the correct one 1`] = `
+<li
+  className="robbo-answers__question"
+>
+  <p
+    className="robbo-answers__question-text"
+  >
+    How many wheels?
+  </p>
+  <dl
+    className="robbo-answers__values"
+  >
+    <dt>
+      Learner's answer
+    </dt>
+    <dd
+      className="robbo-answers__value"
+    >
+      <span
+        className="robbo-answers__value-mark"
+      >
+        <Icon
+          className="robbo-answers__value-icon--incorrect"
+          screenReaderText="Incorrect"
+          size="sm"
+          src="Cancel"
+        />
+      </span>
+      <span
+        className="robbo-answers__value-text"
+      >
+        Two
+      </span>
+    </dd>
+    <Fragment>
+      <dt>
+        Correct answer
+      </dt>
+      <dd
+        className="robbo-answers__value"
+      >
+        <span
+          className="robbo-answers__value-mark"
+        />
+        <span
+          className="robbo-answers__value-text"
+        >
+          Four
+        </span>
+      </dd>
+    </Fragment>
+  </dl>
+</li>
+`;
+
+exports[`LearnerAnswers loaded snapshot 1`] = `
+<div
+  className="robbo-answers"
+>
+  <div
+    className="robbo-answers__toolbar"
+  >
+    <p
+      className="robbo-answers__summary"
+    >
+      Problems with mistakes: 1 of 3
+      , without an answer: 1
+    </p>
+    <Form.Switch
+      checked={true}
+      className="robbo-answers__switch"
+      onChange={[MockFunction hooks.handleOnlyErrorsChange]}
+    >
+      Only problems with mistakes
+    </Form.Switch>
+  </div>
+  <ol
+    aria-label="Problems of the assignment"
+    className="robbo-answers__list"
+  >
+    <ProblemAnswers
+      courseId="course-v1:Org+Course+Run"
+      headingId="robbo-answers-problem-0"
+      key="block-v1:Org+Course+Run+type@problem+block@mc"
+      problem={
+        {
+          "answers": [
+            {
+              "answer": "Motor",
+              "correctAnswer": "Motor",
+              "correctness": "correct",
+              "question": "What turns a wheel?",
+            },
+            {
+              "answer": "Two",
+              "correctAnswer": "Four",
+              "correctness": "incorrect",
+              "question": "How many wheels?",
+            },
+          ],
+          "answersError": false,
+          "attempts": 3,
+          "correctness": "partially-correct",
+          "earned": 0.5,
+          "id": "block-v1:Org+Course+Run+type@problem+block@mc",
+          "name": "Wheels",
+          "possible": 2,
+          "saved": false,
+          "type": "problem",
+          "unitName": "Unit 1",
+        }
+      }
+    />
+  </ol>
+</div>
+`;
+
+exports[`ProblemAnswers snapshot 1`] = `
+<li
+  aria-labelledby="heading"
+  className="robbo-answers__problem"
+>
+  <div
+    className="robbo-answers__problem-header"
+  >
+    <div
+      className="robbo-answers__problem-title"
+    >
+      <p
+        className="robbo-answers__unit"
+      >
+        Unit 1
+      </p>
+      <h3
+        className="robbo-answers__name"
+        id="heading"
+      >
+        Wheels
+      </h3>
+    </div>
+    <div
+      className="robbo-answers__problem-meta"
+    >
+      <StatusBadge
+        problem={
+          {
+            "answers": [
+              {
+                "answer": "Motor",
+                "correctAnswer": "Motor",
+                "correctness": "correct",
+                "question": "What turns a wheel?",
+              },
+              {
+                "answer": "Two",
+                "correctAnswer": "Four",
+                "correctness": "incorrect",
+                "question": "How many wheels?",
+              },
+            ],
+            "answersError": false,
+            "attempts": 3,
+            "correctness": "partially-correct",
+            "earned": 0.5,
+            "id": "block-v1:Org+Course+Run+type@problem+block@mc",
+            "name": "Wheels",
+            "possible": 2,
+            "saved": false,
+            "type": "problem",
+            "unitName": "Unit 1",
+          }
+        }
+      />
+      <span>
+        Points: 0.5 of 2
+      </span>
+      <span>
+        Attempts: 3
+      </span>
+    </div>
+  </div>
+  <ul
+    className="robbo-answers__questions"
+  >
+    <Answer
+      answer={
+        {
+          "answer": "Motor",
+          "correctAnswer": "Motor",
+          "correctness": "correct",
+          "question": "What turns a wheel?",
+        }
+      }
+      key="0"
+    />
+    <Answer
+      answer={
+        {
+          "answer": "Two",
+          "correctAnswer": "Four",
+          "correctness": "incorrect",
+          "question": "How many wheels?",
+        }
+      }
+      key="1"
+    />
+  </ul>
+  <Hyperlink
+    className="robbo-answers__link"
+    destination="http://localhost:18000/courses/course-v1:Org+Course+Run/jump_to/block-v1:Org+Course+Run+type@problem+block@mc"
+    externalLinkAlternativeText="opens in a new tab"
+    externalLinkTitle="opens in a new tab"
+    target="_blank"
+  >
+    Open in course
+  </Hyperlink>
+</li>
+`;

@@ -1,30 +1,89 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`EditModal component render with error snapshot 1`] = `
+exports[`EditModal component answers tab snapshot 1`] = `
 <ModalDialog
   hasCloseButton={true}
   isFullscreenOnMobile={true}
   isOpen="test-is-open"
   onClose={[MockFunction hooks.onClose]}
   size="xl"
-  title="Edit Grades"
+  title="Answers and grade"
 >
+  <ModalDialog.Header>
+    <ModalDialog.Title>
+      Answers and grade
+    </ModalDialog.Title>
+  </ModalDialog.Header>
   <ModalDialog.Body>
     <div>
       <ModalHeaders />
-      <Alert
-        dismissible={false}
-        show={true}
-        variant="danger"
+      <Tabs
+        activeKey="answers"
+        className="robbo-grade-modal__tabs"
+        id="robbo-grade-modal-tabs"
+        onSelect={[MockFunction hooks.setActiveTab]}
       >
-        test-error
-      </Alert>
-      <OverrideTable />
-      <div>
-        Showing most recent actions (max 5). To see more, please contact support
-      </div>
-      <div>
-        Note: Once you save, your changes will be visible to students.
+        <Tab
+          eventKey="answers"
+          title="Answers"
+        >
+          <LearnerAnswers />
+        </Tab>
+        <Tab
+          eventKey="override"
+          title="Change grade"
+        >
+          <Alert
+            dismissible={false}
+            show={true}
+            variant="danger"
+          >
+            test-error
+          </Alert>
+          <OverrideTable />
+          <div>
+            Showing most recent actions (max 5). To see more, please contact support
+          </div>
+          <div>
+            Note: Once you save, your changes will be visible to students.
+          </div>
+        </Tab>
+      </Tabs>
+    </div>
+  </ModalDialog.Body>
+  <ModalDialog.Footer>
+    <ActionRow>
+      <ModalDialog.CloseButton
+        variant="tertiary"
+      >
+        Close
+      </ModalDialog.CloseButton>
+    </ActionRow>
+  </ModalDialog.Footer>
+</ModalDialog>
+`;
+
+exports[`EditModal component frozen grades snapshot 1`] = `
+<ModalDialog
+  hasCloseButton={true}
+  isFullscreenOnMobile={true}
+  isOpen="test-is-open"
+  onClose={[MockFunction hooks.onClose]}
+  size="xl"
+  title="Learner's answers"
+>
+  <ModalDialog.Header>
+    <ModalDialog.Title>
+      Learner's answers
+    </ModalDialog.Title>
+  </ModalDialog.Header>
+  <ModalDialog.Body>
+    <div>
+      <ModalHeaders />
+      <div
+        className="robbo-grade-modal__answers-only"
+      >
+        <LearnerAnswers />
       </div>
     </div>
   </ModalDialog.Body>
@@ -33,43 +92,62 @@ exports[`EditModal component render with error snapshot 1`] = `
       <ModalDialog.CloseButton
         variant="tertiary"
       >
-        Cancel
+        Close
       </ModalDialog.CloseButton>
-      <Button
-        onClick={[MockFunction hooks.handleAdjustedGradeClick]}
-        variant="primary"
-      >
-        Save Grades
-      </Button>
     </ActionRow>
   </ModalDialog.Footer>
 </ModalDialog>
 `;
 
-exports[`EditModal component render without error snapshot 1`] = `
+exports[`EditModal component grade form tab snapshot 1`] = `
 <ModalDialog
   hasCloseButton={true}
   isFullscreenOnMobile={true}
   isOpen="test-is-open"
   onClose={[MockFunction hooks.onClose]}
   size="xl"
-  title="Edit Grades"
+  title="Answers and grade"
 >
+  <ModalDialog.Header>
+    <ModalDialog.Title>
+      Answers and grade
+    </ModalDialog.Title>
+  </ModalDialog.Header>
   <ModalDialog.Body>
     <div>
       <ModalHeaders />
-      <Alert
-        dismissible={false}
-        show={false}
-        variant="danger"
-      />
-      <OverrideTable />
-      <div>
-        Showing most recent actions (max 5). To see more, please contact support
-      </div>
-      <div>
-        Note: Once you save, your changes will be visible to students.
-      </div>
+      <Tabs
+        activeKey="override"
+        className="robbo-grade-modal__tabs"
+        id="robbo-grade-modal-tabs"
+        onSelect={[MockFunction hooks.setActiveTab]}
+      >
+        <Tab
+          eventKey="answers"
+          title="Answers"
+        >
+          <LearnerAnswers />
+        </Tab>
+        <Tab
+          eventKey="override"
+          title="Change grade"
+        >
+          <Alert
+            dismissible={false}
+            show={true}
+            variant="danger"
+          >
+            test-error
+          </Alert>
+          <OverrideTable />
+          <div>
+            Showing most recent actions (max 5). To see more, please contact support
+          </div>
+          <div>
+            Note: Once you save, your changes will be visible to students.
+          </div>
+        </Tab>
+      </Tabs>
     </div>
   </ModalDialog.Body>
   <ModalDialog.Footer>

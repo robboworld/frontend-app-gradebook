@@ -1,3 +1,4 @@
+// Modifications Copyright (C) 2026 Robbo. See NOTICE at repository root.
 import React from 'react';
 import { shallow } from '@edx/react-unit-test-utils';
 
@@ -11,7 +12,6 @@ const { useGradeButtonData, default: GradeButton } = module;
 
 jest.mock('data/redux/hooks', () => ({
   selectors: {
-    assignmentTypes: { useAreGradesFrozen: jest.fn() },
     grades: {
       useGradeData: jest.fn(),
     },
@@ -42,7 +42,6 @@ const props = {
 const gradeFormat = 'percent';
 const setModalState = jest.fn();
 const subsectionGrade = () => 'test-subsection-grade';
-selectors.assignmentTypes.useAreGradesFrozen.mockReturnValue(false);
 selectors.grades.useGradeData.mockReturnValue({ gradeFormat });
 thunkActions.app.useSetModalStateFromTable.mockReturnValue(setModalState);
 transforms.grades.subsectionGrade.mockReturnValue(subsectionGrade);
@@ -59,7 +58,6 @@ describe('GradeButton', () => {
     });
     describe('behavior', () => {
       it('initializes redux hooks', () => {
-        expect(selectors.assignmentTypes.useAreGradesFrozen).toHaveBeenCalled();
         expect(selectors.grades.useGradeData).toHaveBeenCalled();
         expect(transforms.grades.subsectionGrade).toHaveBeenCalledWith({
           gradeFormat,
@@ -69,9 +67,6 @@ describe('GradeButton', () => {
       });
     });
     describe('output', () => {
-      test('forwards areGradesFrozen from redux hook', () => {
-        expect(out.areGradesFrozen).toEqual(false);
-      });
       test('label passed from subsection grade redux hook', () => {
         expect(out.label).toEqual(subsectionGrade());
       });
@@ -88,24 +83,14 @@ describe('GradeButton', () => {
     let hookSpy;
     const moduleKeys = keyStore(module);
     const hookProps = {
-      areGradesFrozen: false,
       label: 'test-label',
       onClick: jest.fn().mockName('hooks.onClick'),
     };
     beforeEach(() => {
       hookSpy = jest.spyOn(module, moduleKeys.useGradeButtonData);
     });
-    describe('frozen grades', () => {
-      beforeEach(() => {
-        hookSpy.mockReturnValue({ ...hookProps, areGradesFrozen: true });
-        el = shallow(<GradeButton {...props} />);
-      });
-      test('snapshot', () => {
-        expect(el.snapshot).toMatchSnapshot();
-        expect(el.instance.el).toEqual(hookProps.label);
-      });
-    });
-    describe('not frozen grades', () => {
+    // Robbo: frozen grades keep the button too: the modal then shows only the learner's answers.
+    describe('button', () => {
       beforeEach(() => {
         hookSpy.mockReturnValue(hookProps);
         el = shallow(<GradeButton {...props} />);
