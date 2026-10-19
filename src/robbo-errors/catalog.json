@@ -1,0 +1,184 @@
+{
+  "generated_from": "openedx-platform lms/djangoapps/robbo_errors/catalog.yaml (scripts/robbo-errors-sync.py)",
+  "ui": {
+    "code": {
+      "ru": "Код",
+      "en": "Code"
+    },
+    "copy": {
+      "ru": "Скопировать",
+      "en": "Copy"
+    },
+    "copied": {
+      "ru": "Скопировано",
+      "en": "Copied"
+    },
+    "help_learner": {
+      "ru": "Покажите это сообщение преподавателю или [напишите в поддержку]",
+      "en": "Show this message to your teacher or [contact support]"
+    },
+    "help_staff": {
+      "ru": "Не получается? [Напишите в поддержку]",
+      "en": "Still not working? [Contact support]"
+    },
+    "retry": {
+      "ru": "Повторить",
+      "en": "Try again"
+    },
+    "reload": {
+      "ru": "Обновить страницу",
+      "en": "Reload the page"
+    },
+    "back": {
+      "ru": "Вернуться назад",
+      "en": "Go back"
+    },
+    "home": {
+      "ru": "На главную",
+      "en": "Go to the home page"
+    },
+    "login": {
+      "ru": "Войти",
+      "en": "Sign in"
+    },
+    "support_url": "https://support.robbo.world/"
+  },
+  "codes": {
+    "NET-OFFLINE": {
+      "title": {
+        "ru": "Нет связи с сайтом",
+        "en": "No connection to the site"
+      },
+      "message": {
+        "ru": "Проверьте подключение к интернету и повторите действие.",
+        "en": "Check your internet connection and try again."
+      },
+      "journal": "case"
+    },
+    "SRV-RESTART": {
+      "title": {
+        "ru": "Сайт временно не отвечает",
+        "en": "The site is temporarily unavailable"
+      },
+      "message": {
+        "ru": "Скорее всего, идёт обновление. Подождите минуту и повторите действие.",
+        "en": "It is probably being updated. Wait a minute and try again."
+      },
+      "journal": "case"
+    },
+    "SRV-ERROR": {
+      "title": {
+        "ru": "Не получилось выполнить действие",
+        "en": "Couldn't complete the action"
+      },
+      "message": {
+        "ru": "Это ошибка на нашей стороне, мы её записали. Попробуйте ещё раз позже.",
+        "en": "This is an error on our side, and we have logged it. Please try again later."
+      },
+      "journal": "case"
+    },
+    "SESSION-EXPIRED": {
+      "title": {
+        "ru": "Нужно войти заново",
+        "en": "Please sign in again"
+      },
+      "message": {
+        "ru": "Время входа на сайт истекло. Войдите ещё раз и повторите действие.",
+        "en": "Your session has expired. Sign in again and repeat the action."
+      },
+      "journal": "count"
+    },
+    "ACCESS-DENIED": {
+      "title": {
+        "ru": "Нет доступа",
+        "en": "No access"
+      },
+      "message": {
+        "ru": "У вашей учётной записи нет доступа к этой странице или действию.",
+        "en": "Your account doesn't have access to this page or action."
+      },
+      "journal": "count"
+    },
+    "NOT-FOUND": {
+      "title": {
+        "ru": "Страница не найдена",
+        "en": "Page not found"
+      },
+      "message": {
+        "ru": "Возможно, материал удалили или в ссылке ошибка. Проверьте адрес или вернитесь на главную.",
+        "en": "The material may have been removed, or the link has a mistake. Check the address or go to the home page."
+      },
+      "journal": "count"
+    },
+    "TOO-MANY": {
+      "title": {
+        "ru": "Слишком много попыток",
+        "en": "Too many attempts"
+      },
+      "message": {
+        "ru": "Подождите несколько минут и попробуйте снова.",
+        "en": "Wait a few minutes and try again."
+      },
+      "journal": "count"
+    },
+    "UPLOAD-SIZE": {
+      "title": {
+        "ru": "Не удалось загрузить файл",
+        "en": "Couldn't upload the file"
+      },
+      "message": {
+        "ru": "Файл больше {limit} МБ. Уменьшите его или разделите на несколько частей.",
+        "en": "The file is larger than {limit} MB. Make it smaller or split it into parts."
+      },
+      "message_fallback": {
+        "ru": "Файл слишком большой. Уменьшите его или разделите на несколько частей.",
+        "en": "The file is too large. Make it smaller or split it into parts."
+      },
+      "journal": "count"
+    },
+    "PAGE-STALE": {
+      "title": {
+        "ru": "Страница устарела",
+        "en": "The page is out of date"
+      },
+      "message": {
+        "ru": "Вернитесь назад, обновите страницу и повторите действие. Если не поможет, выйдите и войдите снова.",
+        "en": "Go back, reload the page and repeat the action. If that doesn't help, sign out and sign in again."
+      },
+      "journal": "count"
+    },
+    "BAD-INPUT": {
+      "title": {
+        "ru": "Проверьте введённые данные",
+        "en": "Check the entered data"
+      },
+      "message": {
+        "ru": "Сайт не смог принять данные в таком виде. Исправьте их и попробуйте снова.",
+        "en": "The site couldn't accept the data in this form. Correct it and try again."
+      },
+      "journal": "count"
+    },
+    "UNIT-LOAD": {
+      "title": {
+        "ru": "Не удалось загрузить материал",
+        "en": "Couldn't load the material"
+      },
+      "message": {
+        "ru": "Обновите страницу. Если материал так и не появится, откройте его позже.",
+        "en": "Reload the page. If the material still doesn't appear, open it later."
+      },
+      "journal": "case"
+    },
+    "APP-CRASH": {
+      "title": {
+        "ru": "Страница не загрузилась",
+        "en": "The page failed to load"
+      },
+      "message": {
+        "ru": "Обновите страницу. Если не поможет, откройте её снова через несколько минут.",
+        "en": "Reload the page. If that doesn't help, open it again in a few minutes."
+      },
+      "journal": "case"
+    }
+  }
+}

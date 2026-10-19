@@ -5,6 +5,7 @@ import React, { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
 import {
+  APP_INIT_ERROR,
   APP_READY,
   initialize,
   mergeConfig,
@@ -14,7 +15,11 @@ import {
 import lightning from './lightning';
 
 import messages from './i18n';
+import { initRobboErrors, RobboErrorPage, robboErrorsMiddleware } from './robbo-errors';
 import App from './App';
+
+// Robbo: human-readable errors with a code and number (src/robbo-errors).
+initRobboErrors({ app: 'gradebook', audience: 'staff' });
 
 subscribe(APP_READY, () => {
   lightning();
@@ -28,7 +33,19 @@ subscribe(APP_READY, () => {
   );
 });
 
+// PubSub calls back with (topic, data): the error is the second argument.
+subscribe(APP_INIT_ERROR, (message, error) => {
+  const root = createRoot(document.getElementById('root'));
+
+  root.render(
+    <StrictMode>
+      <RobboErrorPage error={error} startup />
+    </StrictMode>,
+  );
+});
+
 initialize({
+  authMiddleware: [robboErrorsMiddleware],
   handlers: {
     config: () => {
       mergeConfig({
