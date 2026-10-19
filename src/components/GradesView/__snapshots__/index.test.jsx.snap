@@ -29,6 +29,7 @@ exports[`GradesView component render snapshot 1`] = `
     <BulkManagementControls />
   </div>
   <FilteredUsersLabel />
+  <GradesLoadError />
   <GradebookTable />
   <PageButtons />
   <p>

@@ -97,12 +97,15 @@ const grades = (state = initialState, { type, payload } = {}) => {
         startedFetching: true,
         finishedFetching: false,
         showSpinner: true,
+        fetchError: undefined,
       };
     case actions.fetching.error.toString():
       return {
         ...state,
         finishedFetching: true,
         errorFetching: true,
+        // Robbo: describeError() of the failure, shown by GradesLoadError (was silent).
+        fetchError: payload,
       };
     case actions.fetching.received.toString():
       return {

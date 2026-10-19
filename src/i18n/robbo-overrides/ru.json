@@ -107,5 +107,6 @@
   "pgn.DataTable.FilterStatus.clearFiltersText": "Сбросить фильтры",
   "pgn.DataTable.paginationLabel": "Страницы таблицы",
   "pgn.Alert.closeLabel": "Закрыть",
-  "pgn.Toast.closeLabel": "Закрыть"
+  "pgn.Toast.closeLabel": "Закрыть",
+  "gradebook.BulkManagementHistoryView.bulkImportError": "Ошибки при обработке файла: {errors}"
 }

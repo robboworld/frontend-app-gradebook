@@ -28,7 +28,16 @@ exports[`BulkManagementAlerts component no errer, no upload success snapshot - d
     show={true}
     variant="danger"
   >
-    Oh noooooo
+    <FormattedMessage
+      defaultMessage="Errors while processing the file: {errors}"
+      description="Robbo: errors of a CSV grade import, {errors} — the messages joined with semicolons"
+      id="gradebook.BulkManagementHistoryView.bulkImportError"
+      values={
+        {
+          "errors": "Oh noooooo",
+        }
+      }
+    />
   </Alert>
   <Alert
     dismissible={false}

@@ -189,11 +189,12 @@ export const allGrades = ({ grades: { results } }) => results;
  * returns the stringified bulkManagement import error messages.
  * @param {object} state - redux state
  * @return {string} - bulk import error messages joined into a display form
- *   (or empty string if there are none)
+ *   (or empty string if there are none). Robbo: without the English "Errors while processing:",
+ *   BulkManagementAlerts adds a translated heading.
  */
 export const bulkImportError = ({ grades: { bulkManagement } }) => (
   (!!bulkManagement && bulkManagement.errorMessages)
-    ? `Errors while processing: ${bulkManagement.errorMessages.join('; ')};`
+    ? bulkManagement.errorMessages.join('; ')
     : ''
 );
 

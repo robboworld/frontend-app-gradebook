@@ -61,7 +61,8 @@ describe('BulkManagementAlerts', () => {
       });
       test('open danger alert with bulkImportError content', () => {
         expect(el.instance.children[0].type).toBe('Alert');
-        expect(el.instance.findByType(Alert)[0].children[0].el).toEqual(errorMessage);
+        // Robbo: the messages go into a translated heading
+        expect(el.instance.findByType(Alert)[0].children[0].props.values.errors).toEqual(errorMessage);
         expect(el.instance.findByType(Alert)[0].props.show).toEqual(true);
       });
       test('open success alert with messages.successDialog content', () => {

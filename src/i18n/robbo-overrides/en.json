@@ -1,1 +1,3 @@
-{}
+{
+  "gradebook.BulkManagementHistoryView.bulkImportError": "Errors while processing the file: {errors}"
+}

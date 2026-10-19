@@ -9,6 +9,7 @@ import FilterBadges from './FilterBadges';
 import FilteredUsersLabel from './FilteredUsersLabel';
 import FilterMenuToggle from './FilterMenuToggle';
 import GradebookTable from './GradebookTable';
+import GradesLoadError from './GradesLoadError';
 import ImportSuccessToast from './ImportSuccessToast';
 import InterventionsReport from './InterventionsReport';
 import PageButtons from './PageButtons';
@@ -51,6 +52,7 @@ export const GradesView = ({ updateQueryParams }) => {
       </div>
 
       <FilteredUsersLabel />
+      <GradesLoadError />
 
       <GradebookTable />
 

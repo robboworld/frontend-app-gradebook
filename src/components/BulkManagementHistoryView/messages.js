@@ -11,6 +11,11 @@ const messages = defineMessages({
     defaultMessage: 'Below is a log of previous grade imports.  To download a CSV of your gradebook and import grades for override, return to the Gradebook.  Please note, after importing grades, it may take a few seconds to process the override.',
     description: 'Bulk Management History View help text',
   },
+  bulkImportError: {
+    id: 'gradebook.BulkManagementHistoryView.bulkImportError',
+    defaultMessage: 'Errors while processing the file: {errors}',
+    description: 'Robbo: errors of a CSV grade import, {errors} — the messages joined with semicolons',
+  },
   successDialog: {
     id: 'gradebook.BulkManagementHistoryView.successDialog',
     defaultMessage: 'CSV processing. File uploads may take several minutes to complete.',
