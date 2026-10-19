@@ -1,6 +1,7 @@
 import React, { StrictMode } from 'react';
 
 import {
+  APP_INIT_ERROR,
   APP_READY,
   initialize,
   mergeConfig,
@@ -8,6 +9,7 @@ import {
 } from '@edx/frontend-platform';
 
 import messages from './i18n';
+import { initRobboErrors, RobboErrorPage } from './robbo-errors';
 import App from './App';
 import '.';
 
@@ -27,12 +29,21 @@ jest.mock('react-dom/client', () => {
 });
 
 jest.mock('@edx/frontend-platform', () => ({
+  APP_INIT_ERROR: 'app-init-error',
   APP_READY: 'app-is-ready-key',
   initialize: jest.fn(),
   mergeConfig: jest.fn(),
   subscribe: jest.fn(),
 }));
 jest.mock('./App', () => 'App');
+// Robbo: src/robbo-errors has its own tests; here only its wiring is checked (the real initRobboErrors
+// would add its own APP_READY subscriber and shift subscribe.mock.calls).
+jest.mock('./robbo-errors', () => ({
+  initRobboErrors: jest.fn(),
+  RobboErrorBoundary: 'RobboErrorBoundary',
+  RobboErrorPage: 'RobboErrorPage',
+  robboErrorsMiddleware: 'robboErrorsMiddleware',
+}));
 
 describe('app registry', () => {
   let getElement;
@@ -54,8 +65,24 @@ describe('app registry', () => {
       </StrictMode>,
     );
   });
+  test('subscribe is called for APP_INIT_ERROR, rendering RobboErrorPage with the error', () => {
+    const callArgs = subscribe.mock.calls[1];
+    expect(callArgs[0]).toEqual(APP_INIT_ERROR);
+    const error = { message: 'test-error-message' };
+    // Robbo: PubSub calls back with (topic, data), the error is the second argument.
+    callArgs[1](APP_INIT_ERROR, error);
+    expect(mockRender).toHaveBeenCalledWith(
+      <StrictMode>
+        <RobboErrorPage error={error} startup />
+      </StrictMode>,
+    );
+  });
+  test('Robbo: human-readable errors for staff', () => {
+    expect(initRobboErrors).toHaveBeenCalledWith({ app: 'gradebook', audience: 'staff' });
+  });
   test('initialize is called with requireAuthenticatedUser, messages, and a config handler', () => {
     expect(initialize).toHaveBeenCalledWith({
+      authMiddleware: ['robboErrorsMiddleware'],
       messages,
       requireAuthenticatedUser: true,
       handlers: {

@@ -21,6 +21,7 @@ jest.mock('data/store', () => 'testStore');
 jest.mock('containers/GradebookPage', () => 'GradebookPage');
 jest.mock('@edx/frontend-component-header', () => 'Header');
 jest.mock('./head/Head', () => 'Head');
+jest.mock('./robbo-errors', () => ({ RobboErrorBoundary: 'RobboErrorBoundary' }));
 
 let el;
 let secondChild;
@@ -32,7 +33,8 @@ describe('App router component', () => {
   describe('component', () => {
     beforeEach(() => {
       el = shallow(<App />);
-      secondChild = el.instance.children;
+      // Robbo: the app inside AppProvider is wrapped in RobboErrorBoundary (src/robbo-errors).
+      secondChild = el.instance.children[0].children;
     });
     describe('AppProvider', () => {
       test('AppProvider is the parent component, passed the redux store props', () => {
@@ -40,13 +42,19 @@ describe('App router component', () => {
         expect(el.instance.props.store).toEqual(store);
       });
     });
+    describe('RobboErrorBoundary', () => {
+      test('only child of AppProvider', () => {
+        expect(el.instance.children).toHaveLength(1);
+        expect(el.instance.children[0].type).toBe('RobboErrorBoundary');
+      });
+    });
     describe('Head', () => {
-      test('first child of AppProvider', () => {
-        expect(el.instance.children[0].type).toBe('Head');
+      test('first child inside RobboErrorBoundary', () => {
+        expect(secondChild[0].type).toBe('Head');
       });
     });
     describe('Router', () => {
-      test('second child of AppProvider', () => {
+      test('second child inside RobboErrorBoundary', () => {
         expect(secondChild[1].type).toBe('div');
       });
       test('Header is above/outside-of the routing', () => {
