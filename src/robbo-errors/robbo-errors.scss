@@ -1,0 +1,121 @@
+// Copyright (C) 2026 Robbo <https://robbo.ru>
+// SPDX-License-Identifier: AGPL-3.0-only
+// Part of the Robbo Open edX MFE overrides. See NOTICE at repository root.
+//
+// Error page and the code line of error messages (docs/human-errors.md §1 in the meta repo).
+// Brand tokens: the values of src/sass/_robbo-brand-tokens.scss (docs/design/robbo-brand-guidelines.md);
+// not every MFE has that file, so the module carries its own. Buttons are Paragon's (.btn-*).
+
+$robbo-errors-green: #00AF41;
+$robbo-errors-green-dark: mix(#000000, $robbo-errors-green, 28%);
+$robbo-errors-coal: #383838;
+$robbo-errors-grey: #989898;
+$robbo-errors-white: #FFFFFF;
+$robbo-errors-gap: 1rem;
+$robbo-errors-tap: 2.75rem;
+
+.robbo-errors-page {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: $robbo-errors-gap;
+  background: $robbo-errors-white;
+  color: $robbo-errors-coal;
+}
+
+.robbo-errors-page__card {
+  width: 100%;
+  max-width: 34rem;
+  padding: $robbo-errors-gap * 2;
+  border: 1px solid $robbo-errors-grey;
+  border-radius: .75rem;
+
+  @media (width <= 575.98px) {
+    padding: $robbo-errors-gap * 1.25;
+  }
+}
+
+.robbo-errors-page__title {
+  margin: 0 0 .5rem;
+  font-size: 1.5rem;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.robbo-errors-page__message {
+  overflow-wrap: anywhere;
+}
+
+.robbo-errors-page__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $robbo-errors-gap;
+  margin: $robbo-errors-gap * 1.5 0;
+}
+
+.robbo-errors-details {
+  font-size: .875rem;
+
+  p {
+    margin: 0 0 .5rem;
+    overflow-wrap: anywhere;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.robbo-errors-details__code {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .5rem;
+}
+
+.robbo-errors-details__number {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+}
+
+// Buttons of the module are the brand green in every MFE: Paragon's primary differs between them.
+.robbo-errors-details .btn.robbo-errors-details__copy {
+  min-height: $robbo-errors-tap;
+  border-color: $robbo-errors-green;
+  background: transparent;
+  color: $robbo-errors-coal;
+
+  &:hover,
+  &:focus-visible {
+    border-color: $robbo-errors-green-dark;
+    background: mix(#FFFFFF, $robbo-errors-green, 90%);
+    color: $robbo-errors-coal;
+  }
+}
+
+.robbo-errors-page .btn.robbo-errors-page__action,
+.robbo-errors-notice .pgn__alert-actions .btn {
+  border-color: $robbo-errors-green;
+  background: $robbo-errors-green;
+  color: $robbo-errors-white;
+
+  &:hover,
+  &:focus-visible {
+    border-color: $robbo-errors-green-dark;
+    background: $robbo-errors-green-dark;
+    color: $robbo-errors-white;
+  }
+}
+
+// Off-screen field for copying on plain http, where the Clipboard API is missing.
+.robbo-errors-details__copy-field {
+  position: fixed;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.robbo-errors-notice__message {
+  overflow-wrap: anywhere;
+}

@@ -10,22 +10,25 @@ import store from 'data/store';
 import GradebookPage from 'containers/GradebookPage';
 import './App.scss';
 import Head from './head/Head';
+import { RobboErrorBoundary } from './robbo-errors';
 
 const App = () => (
   <AppProvider store={store}>
-    <Head />
-    <div>
-      <Header />
-      <main>
-        <Routes>
-          <Route
-            path="/:courseId"
-            element={<GradebookPage />}
-          />
-        </Routes>
-      </main>
-      <FooterSlot />
-    </div>
+    <RobboErrorBoundary>
+      <Head />
+      <div>
+        <Header />
+        <main>
+          <Routes>
+            <Route
+              path="/:courseId"
+              element={<GradebookPage />}
+            />
+          </Routes>
+        </main>
+        <FooterSlot />
+      </div>
+    </RobboErrorBoundary>
   </AppProvider>
 );
 
