@@ -250,9 +250,10 @@ describe('grades thunkActions', () => {
       ));
     });
     describe('after invalid response', () => {
+      // Robbo: the error action carries describeError() of the failure for GradesLoadError.
       it('dispatches error', () => testFetch({})(
         (resolve, reject) => reject(),
-        [started(), error()],
+        [started(), error(expect.objectContaining({ code: 'APP-CRASH' }))],
       ));
     });
   });
@@ -507,9 +508,10 @@ describe('grades thunkActions', () => {
       ));
     });
     describe('error response', () => {
+      // Robbo: the error action carries describeError() of the failure for GradesLoadError.
       it('sends error action', () => testFetch(
         (resolve, reject) => reject(),
-        [started(), error()],
+        [started(), error(expect.objectContaining({ code: 'APP-CRASH' }))],
       ));
     });
   });
