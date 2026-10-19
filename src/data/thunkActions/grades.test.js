@@ -3,7 +3,6 @@ import thunk from 'redux-thunk';
 
 import * as auth from '@edx/frontend-platform/auth';
 
-import GRADE_OVERRIDE_HISTORY_ERROR_DEFAULT_MSG from 'data/constants/errors';
 import actions from 'data/actions';
 import { sortAlphaAsc } from 'data/actions/utils';
 import lms from 'data/services/lms';
@@ -364,12 +363,11 @@ describe('grades thunkActions', () => {
       });
     });
     describe('api failure', () => {
-      it('sends error action with default error message', () => {
+      // Robbo: the human text with the code and number (src/robbo-errors) instead of an English default.
+      it('sends error action with the human error text', () => {
         const resolveFn = (resolve, reject) => reject();
         return testFetch(resolveFn, [
-          actions.grades.overrideHistory.error(
-            GRADE_OVERRIDE_HISTORY_ERROR_DEFAULT_MSG,
-          ),
+          actions.grades.overrideHistory.error(expect.stringContaining('APP-CRASH')),
         ]);
       });
     });
@@ -544,7 +542,7 @@ describe('grades thunkActions', () => {
           return testFetch((resolve, reject) => reject(error), [
             csvUpload.started(),
             uploadOverride.failure({ courseId, error }),
-            csvUpload.error({ errorMessages: ['Unknown error.'] }),
+            csvUpload.error({ errorMessages: [expect.stringMatching(/\(.+ [A-Z]+(-[A-Z]+)+ · /)] }),
           ]);
         });
       });
@@ -554,7 +552,7 @@ describe('grades thunkActions', () => {
           return testFetch((resolve, reject) => reject(error), [
             csvUpload.started(),
             uploadOverride.failure({ courseId, error }),
-            csvUpload.error({ errorMessages: ['Unknown error.'] }),
+            csvUpload.error({ errorMessages: [expect.stringMatching(/\(.+ [A-Z]+(-[A-Z]+)+ · /)] }),
           ]);
         });
       });

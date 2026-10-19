@@ -23,7 +23,8 @@ export const BulkManagementAlerts = ({
       show={!!bulkImportError}
       dismissible={false}
     >
-      {bulkImportError}
+      {/* Robbo: a translated heading instead of the selector's English "Errors while processing:" */}
+      {bulkImportError && <FormattedMessage {...messages.bulkImportError} values={{ errors: bulkImportError }} />}
     </Alert>
     <Alert
       variant="success"

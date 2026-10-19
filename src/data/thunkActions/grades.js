@@ -3,12 +3,11 @@ import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 
 import { StrictDict } from 'utils';
 
-import GRADE_OVERRIDE_HISTORY_ERROR_DEFAULT_MSG from 'data/constants/errors';
-
 import grades from 'data/actions/grades';
 import { sortAlphaAsc } from 'data/actions/utils';
 import selectors from 'data/selectors';
 import lms from 'data/services/lms';
+import { describeError, inlineText } from 'robbo-errors';
 
 import * as module from './grades';
 
@@ -56,8 +55,9 @@ export const fetchGrades = (overrides = {}) => (
       }
       dispatch(grades.fetching.finished());
     })
-      .catch(() => {
-        dispatch(grades.fetching.error());
+      .catch((error) => {
+        // Robbo: what failed, with the code and number, for GradesLoadError (src/robbo-errors).
+        dispatch(grades.fetching.error(describeError(error)));
       });
   }
 );
@@ -92,8 +92,9 @@ export const fetchGradeOverrideHistory = (subsectionId, userId) => (
         dispatch(grades.overrideHistory.error(data.error_message));
       }
     })
-    .catch(() => {
-      dispatch(grades.overrideHistory.error(GRADE_OVERRIDE_HISTORY_ERROR_DEFAULT_MSG));
+    .catch((error) => {
+      // Robbo: the human text with the code and number, not "Error retrieving grade override history."
+      dispatch(grades.overrideHistory.error(inlineText(describeError(error))));
     })
 );
 
@@ -116,8 +117,9 @@ export const fetchPrevNextGrades = (endpoint) => (
         }));
         dispatch(grades.fetching.finished());
       })
-      .catch(() => {
-        dispatch(grades.fetching.error());
+      .catch((error) => {
+        // Robbo: what failed, with the code and number, for GradesLoadError (src/robbo-errors).
+        dispatch(grades.fetching.error(describeError(error)));
       });
   }
 );
@@ -135,7 +137,8 @@ export const submitImportGradesButtonData = (formData) => (
         const { error_messages: errorMessages, saved, total } = error.data;
         return dispatch(grades.csvUpload.error({ errorMessages, saved, total }));
       }
-      return dispatch(grades.csvUpload.error({ errorMessages: ['Unknown error.'] }));
+      // Robbo: the human text with the code and number (src/robbo-errors), not "Unknown error."
+      return dispatch(grades.csvUpload.error({ errorMessages: [inlineText(describeError(error))] }));
     });
   }
 );
