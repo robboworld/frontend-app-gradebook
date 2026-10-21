@@ -5,7 +5,7 @@
  */
 import { get } from 'data/services/lms/utils';
 
-import { fetchLearnerAnswers, problemUrl } from './api';
+import { fetchLearnerAnswers, fileUrl, problemUrl } from './api';
 
 jest.mock('data/services/lms/utils', () => ({
   ...jest.requireActual('data/services/lms/utils'),
@@ -33,5 +33,12 @@ describe('answers api', () => {
     expect(problemUrl(courseId, problemId)).toEqual(
       `http://localhost:18000/courses/${courseId}/jump_to/${problemId}`,
     );
+  });
+  test('fileUrl puts LMS paths on the LMS, keeps full URLs', () => {
+    expect(fileUrl('/asset-v1:Org+Course+Run+type@asset+block/a.png')).toEqual(
+      'http://localhost:18000/asset-v1:Org+Course+Run+type@asset+block/a.png',
+    );
+    expect(fileUrl('https://example.com/a.png')).toEqual('https://example.com/a.png');
+    expect(fileUrl('//cdn.example.com/a.png')).toEqual('//cdn.example.com/a.png');
   });
 });

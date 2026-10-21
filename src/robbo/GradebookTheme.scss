@@ -1,0 +1,123 @@
+// Copyright (C) 2026 Robbo <https://robbo.ru>
+// SPDX-License-Identifier: AGPL-3.0-only
+// Part of the Robbo Open edX MFE overrides. See NOTICE at repository root.
+//
+// ROBBO look of the gradebook page and of the grade modal (docs/design/robbo-brand-guidelines.md):
+// green links, grades and tabs instead of Paragon's blue and navy, a compact header. The brand
+// package sets $primary only; links and tabs use Paragon's own palette, so they are set here.
+// The modal is rendered outside the page, hence its own root class.
+
+$robbo-gradebook-link: $robbo-brand-primary-dark; // brand green dark enough for text
+$robbo-gradebook-link-hover: $robbo-brand-primary-darker;
+$robbo-gradebook-accent: $robbo-brand-primary;
+$robbo-gradebook-gap: map-get($spacers, 3);
+$robbo-gradebook-gap-sm: map-get($spacers, 2);
+$robbo-gradebook-tab-rule: 2px;
+
+@mixin robbo-gradebook-links {
+  a:not(.btn),
+  .btn-link {
+    color: $robbo-gradebook-link;
+
+    &:hover,
+    &:focus-visible {
+      color: $robbo-gradebook-link-hover;
+    }
+  }
+}
+
+.gradebook-content {
+  @include robbo-gradebook-links;
+
+  h3 {
+    margin-bottom: $robbo-gradebook-gap-sm;
+    font-size: $h4-font-size;
+  }
+
+  h3.step-message-1 {
+    margin-top: map-get($spacers, 4);
+  }
+}
+
+.robbo-gradebook-header__back {
+  display: inline-flex;
+  align-items: center;
+  gap: map-get($spacers, 1);
+  min-height: 44px;
+  font-size: $font-size-sm;
+}
+
+.robbo-gradebook-header__title {
+  margin: 0 0 map-get($spacers, 1);
+}
+
+.robbo-gradebook-header__course {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: $robbo-gradebook-gap-sm $robbo-gradebook-gap;
+
+  h2 {
+    margin: 0;
+    font-size: $h3-font-size;
+  }
+}
+
+.robbo-gradebook-header__course-name {
+  min-width: 0;
+}
+
+.robbo-gradebook-header__course-id {
+  margin: 0;
+  font-size: $font-size-sm;
+  color: $gray-700;
+}
+
+// Grades in the table are buttons that open the answers.
+.gradebook-content .grade-button.btn-link {
+  font-weight: $font-weight-bold;
+  text-decoration: none;
+
+  &:hover,
+  &:focus-visible {
+    text-decoration: underline;
+  }
+}
+
+.robbo-page-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: $robbo-gradebook-gap;
+  padding: map-get($spacers, 4) 0;
+}
+
+.robbo-grade-modal {
+  @include robbo-gradebook-links;
+}
+
+// Both tabs green; the open one is underlined.
+.robbo-grade-modal__tabs.nav-tabs {
+  .nav-link {
+    color: $robbo-gradebook-link;
+    border-bottom: $robbo-gradebook-tab-rule solid transparent;
+
+    &:hover,
+    &:focus-visible {
+      color: $robbo-gradebook-link-hover;
+      background-color: $robbo-ui-primary-light;
+      border-bottom-color: $robbo-gradebook-accent;
+    }
+
+    &:focus::before {
+      border-color: $robbo-gradebook-accent;
+    }
+  }
+
+  .nav-link.active {
+    font-weight: $font-weight-bold;
+    color: $robbo-gradebook-link;
+    border-bottom-color: $robbo-gradebook-accent;
+  }
+}

@@ -1,3 +1,4 @@
+// Modifications Copyright (C) 2026 Robbo. See NOTICE at repository root.
 import React from 'react';
 import { shallow } from '@edx/react-unit-test-utils';
 import { useIntl } from '@edx/frontend-platform/i18n';
@@ -20,6 +21,7 @@ const hookProps = {
   areGradesFrozen: false,
   canUserViewGradebook: true,
   courseId: 'test-course-id',
+  courseName: null,
   handleToggleViewClick: jest.fn().mockName('hooks.handleToggleViewClick'),
   showBulkManagement: false,
   toggleViewMessage: { defaultMessage: 'toggle-view-message' },
@@ -41,6 +43,20 @@ describe('GradebookHeader component', () => {
     describe('default view', () => {
       test('shapshot', () => {
         expect(el.snapshot).toMatchSnapshot();
+      });
+    });
+    describe('course name', () => {
+      const text = (type) => el.instance.findByType(type).map((node) => node.children[0].el);
+      test('the course id until the name loads', () => {
+        el = shallow(<GradebookHeader />);
+        expect(text('h2')).toEqual([hookProps.courseId]);
+        expect(text('p')).toEqual([]);
+      });
+      test('the name with the id under it', () => {
+        useGradebookHeaderData.mockReturnValueOnce({ ...hookProps, courseName: 'Robots' });
+        el = shallow(<GradebookHeader />);
+        expect(text('h2')).toEqual(['Robots']);
+        expect(text('p')).toEqual([hookProps.courseId]);
       });
     });
     describe('show bulk management', () => {

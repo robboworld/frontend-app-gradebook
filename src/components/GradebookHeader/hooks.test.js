@@ -1,9 +1,12 @@
+// Modifications Copyright (C) 2026 Robbo. See NOTICE at repository root.
 import { views } from 'data/constants/app';
 import { actions, selectors } from 'data/redux/hooks';
+import useCourseName from 'robbo/useCourseName';
 
 import messages from './messages';
 import useGradebookHeaderData from './hooks';
 
+jest.mock('robbo/useCourseName', () => jest.fn());
 jest.mock('data/redux/hooks', () => ({
   actions: {
     app: {
@@ -38,6 +41,9 @@ selectors.roles.useCanUserViewGradebook.mockReturnValue(canUserViewGradebook);
 const showBulkManagement = 'test-show-bulk-management';
 selectors.root.useShowBulkManagement.mockReturnValue(showBulkManagement);
 
+const courseName = 'test-course-name';
+useCourseName.mockReturnValue(courseName);
+
 const setView = jest.fn();
 actions.app.useSetView.mockReturnValue(setView);
 
@@ -52,6 +58,7 @@ describe('useGradebookHeaderData hooks', () => {
       expect(selectors.roles.useCanUserViewGradebook).toHaveBeenCalled();
       expect(selectors.root.useShowBulkManagement).toHaveBeenCalled();
       expect(actions.app.useSetView).toHaveBeenCalled();
+      expect(useCourseName).toHaveBeenCalledWith(courseId);
     });
   });
   describe('output', () => {
@@ -60,6 +67,7 @@ describe('useGradebookHeaderData hooks', () => {
       expect(out.areGradesFrozen).toEqual(areGradesFrozen);
       expect(out.canUserViewGradebook).toEqual(canUserViewGradebook);
       expect(out.courseId).toEqual(courseId);
+      expect(out.courseName).toEqual(courseName);
       expect(out.showBulkManagement).toEqual(showBulkManagement);
     });
     describe('handleToggleViewClick', () => {

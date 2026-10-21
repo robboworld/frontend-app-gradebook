@@ -49,11 +49,21 @@ describe('answers hooks', () => {
     state.testGetter(state.keys.answers);
     state.testGetter(state.keys.attempt);
     state.testGetter(state.keys.onlyErrors);
+    state.testGetter(state.keys.pictureExpanded);
+    state.testGetter(state.keys.pictureFailed);
   });
 
   describe('hasErrors', () => {
     test('wrong and partially wrong submissions only', () => {
       expect(problems.filter(hooks.hasErrors).map(({ id }) => id)).toEqual(['wrong', 'partial']);
+    });
+  });
+
+  describe('needsAttention', () => {
+    test('mistakes and open responses awaiting grading', () => {
+      const awaiting = { id: 'ora', correctness: null, awaitingGrade: true };
+      expect([...problems, awaiting].filter(hooks.needsAttention).map(({ id }) => id))
+        .toEqual(['wrong', 'partial', 'ora']);
     });
   });
 
@@ -177,12 +187,52 @@ describe('answers hooks', () => {
         problems,
         wrongCount: 2,
         unansweredCount: 1,
+        awaitingCount: 0,
+        canFilter: true,
         emptyMessage: messages.noErrors,
       });
+    });
+    test('open responses awaiting grading: not unanswered, kept by the switch', () => {
+      const awaiting = { id: 'ora', correctness: null, awaitingGrade: true };
+      answersSpy.mockReturnValue({ status: loadStatuses.loaded, problems: [...problems, awaiting], retry });
+      const out = hooks.useLearnerAnswersData();
+      expect(out).toMatchObject({ unansweredCount: 1, awaitingCount: 1, wrongCount: 2 });
+      expect(out.visibleProblems.map(({ id }) => id)).toEqual(['wrong', 'partial', 'ora']);
+    });
+    test.each([
+      ['no mistakes', problems.filter((problem) => !hooks.hasErrors(problem))],
+      ['mistakes everywhere', problems.filter(hooks.hasErrors)],
+      ['everything awaiting grading', [{ id: 'ora', correctness: null, awaitingGrade: true }]],
+    ])('nothing to filter with %s: all problems', (_, list) => {
+      answersSpy.mockReturnValue({ status: loadStatuses.loaded, problems: list, retry });
+      const out = hooks.useLearnerAnswersData();
+      expect(out.canFilter).toEqual(false);
+      expect(out.visibleProblems).toEqual(list);
     });
     test('the switch sets the filter', () => {
       hooks.useLearnerAnswersData().handleOnlyErrorsChange({ target: { checked: false } });
       state.expectSetStateCalledWith(state.keys.onlyErrors, false);
+    });
+  });
+
+  describe('usePicture', () => {
+    beforeEach(() => state.mock());
+    afterEach(() => state.restore());
+    test('small and loaded at first', () => {
+      const out = hooks.usePicture();
+      state.expectInitializedWith(state.keys.pictureExpanded, false);
+      state.expectInitializedWith(state.keys.pictureFailed, false);
+      expect(out).toMatchObject({ expanded: false, failed: false });
+    });
+    test('toggle switches the size', () => {
+      hooks.usePicture().toggle();
+      const [[update]] = state.setState[state.keys.pictureExpanded].mock.calls;
+      expect(update(false)).toEqual(true);
+      expect(update(true)).toEqual(false);
+    });
+    test('a failed load is remembered', () => {
+      hooks.usePicture().handleError();
+      state.expectSetStateCalledWith(state.keys.pictureFailed, true);
     });
   });
 });

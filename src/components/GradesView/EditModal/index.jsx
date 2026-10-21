@@ -47,6 +47,7 @@ export const EditModal = () => {
 
   return (
     <ModalDialog
+      className="robbo-grade-modal"
       title={title}
       isOpen={isOpen}
       onClose={onClose}

@@ -73,7 +73,7 @@ const messages = defineMessages({
   },
   onlyErrors: {
     id: 'robbo.gradebook.answers.onlyErrors',
-    defaultMessage: 'Only problems with mistakes',
+    defaultMessage: 'Only mistakes and responses awaiting grading',
     description: 'Switch that hides correct and unanswered problems',
   },
   correct: {
@@ -160,6 +160,46 @@ const messages = defineMessages({
     id: 'robbo.gradebook.answers.listLabel',
     defaultMessage: 'Problems of the assignment',
     description: 'Screen reader label of the list of problems',
+  },
+  awaitingGrade: {
+    id: 'robbo.gradebook.answers.status.awaitingGrade',
+    defaultMessage: 'Awaiting grading',
+    description: 'Status of an open response that was submitted and is not graded yet',
+  },
+  summaryAwaiting: {
+    id: 'robbo.gradebook.answers.summaryAwaiting',
+    defaultMessage: 'awaiting grading: {count}',
+    description: 'Part of the summary after the problems with mistakes, when some open responses are not graded yet',
+  },
+  summaryAll: {
+    id: 'robbo.gradebook.answers.summaryAll',
+    defaultMessage: 'Problems: {total}, with mistakes: {wrong}',
+    description: 'Summary of the answers tab when there is nothing to filter: no mistakes or mistakes in every problem',
+  },
+  showPicture: {
+    id: 'robbo.gradebook.answers.showPicture',
+    defaultMessage: 'Enlarge the picture: {name}',
+    description: 'Screen reader label of a small picture in an answer; a click shows it full size',
+  },
+  hidePicture: {
+    id: 'robbo.gradebook.answers.hidePicture',
+    defaultMessage: 'Make the picture small: {name}',
+    description: 'Screen reader label of an enlarged picture in an answer; a click makes it small again',
+  },
+  picture: {
+    id: 'robbo.gradebook.answers.picture',
+    defaultMessage: 'picture',
+    description: 'Name of a picture in an answer that has no name of its own',
+  },
+  pictureError: {
+    id: 'robbo.gradebook.answers.pictureError',
+    defaultMessage: 'The picture did not load. Reopen the answers or open the problem in the course.',
+    description: 'Shown instead of a picture of an answer that failed to load (links to uploaded files expire)',
+  },
+  downloadFile: {
+    id: 'robbo.gradebook.answers.downloadFile',
+    defaultMessage: 'Download',
+    description: 'Link to a file the learner uploaded with the answer, shown full size in a new tab or downloaded',
   },
 });
 

@@ -2,6 +2,7 @@
 
 exports[`EditModal component answers tab snapshot 1`] = `
 <ModalDialog
+  className="robbo-grade-modal"
   hasCloseButton={true}
   isFullscreenOnMobile={true}
   isOpen="test-is-open"
@@ -65,6 +66,7 @@ exports[`EditModal component answers tab snapshot 1`] = `
 
 exports[`EditModal component frozen grades snapshot 1`] = `
 <ModalDialog
+  className="robbo-grade-modal"
   hasCloseButton={true}
   isFullscreenOnMobile={true}
   isOpen="test-is-open"
@@ -101,6 +103,7 @@ exports[`EditModal component frozen grades snapshot 1`] = `
 
 exports[`EditModal component grade form tab snapshot 1`] = `
 <ModalDialog
+  className="robbo-grade-modal"
   hasCloseButton={true}
   isFullscreenOnMobile={true}
   isOpen="test-is-open"
