@@ -2,33 +2,18 @@
 
 exports[`PageButtons component render snapshot 1`] = `
 <div
-  className="d-flex justify-content-center"
-  style={
-    {
-      "paddingBottom": "20px",
-    }
-  }
+  className="robbo-page-buttons"
 >
   <Button
-    disabled="prev-disabled"
+    disabled={false}
     onClick={[MockFunction hooks.prev.onClick]}
-    style={
-      {
-        "margin": "20px",
-      }
-    }
     variant="outline-primary"
   >
     prev-text
   </Button>
   <Button
-    disabled="next-disabled"
+    disabled={true}
     onClick={[MockFunction hooks.next.onClick]}
-    style={
-      {
-        "margin": "20px",
-      }
-    }
     variant="outline-primary"
   >
     next-text

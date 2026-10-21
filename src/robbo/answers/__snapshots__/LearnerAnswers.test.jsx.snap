@@ -15,44 +15,129 @@ exports[`Answer wrong answer with the correct one 1`] = `
     <dt>
       Learner's answer
     </dt>
-    <dd
-      className="robbo-answers__value"
-    >
-      <span
-        className="robbo-answers__value-mark"
-      >
+    <AnswerValue
+      files={[]}
+      mark={
         <Icon
           className="robbo-answers__value-icon--incorrect"
           screenReaderText="Incorrect"
           size="sm"
           src="Cancel"
         />
-      </span>
-      <span
-        className="robbo-answers__value-text"
-      >
-        Two
-      </span>
-    </dd>
+      }
+      text="Two"
+    />
     <Fragment>
       <dt>
         Correct answer
       </dt>
-      <dd
-        className="robbo-answers__value"
-      >
-        <span
-          className="robbo-answers__value-mark"
-        />
-        <span
-          className="robbo-answers__value-text"
-        >
-          Four
-        </span>
-      </dd>
+      <AnswerValue
+        files={[]}
+        mark={null}
+        text="Four"
+      />
     </Fragment>
   </dl>
 </li>
+`;
+
+exports[`AnswerFiles pictures first, links to the other files 1`] = `
+<Fragment>
+  <ul
+    className="robbo-answers__pictures"
+  >
+    <AnswerPicture
+      file={
+        {
+          "description": "Front view",
+          "image": true,
+          "name": "robot.jpg",
+          "url": "/openassessment/storage/photo",
+        }
+      }
+      key="/openassessment/storage/photo"
+    />
+  </ul>
+  <ul
+    className="robbo-answers__files"
+  >
+    <li
+      className="robbo-answers__file"
+      key="/openassessment/storage/program"
+    >
+      <Icon
+        className="robbo-answers__file-icon"
+        size="sm"
+        src="InsertDriveFile"
+      />
+      <span
+        className="robbo-answers__file-name"
+      >
+        robot.sb3
+      </span>
+      <span
+        className="robbo-answers__file-description"
+      >
+        Program
+      </span>
+      <Hyperlink
+        destination="http://localhost:18000/openassessment/storage/program"
+        externalLinkAlternativeText="opens in a new tab"
+        externalLinkTitle="opens in a new tab"
+        target="_blank"
+      >
+        Download
+      </Hyperlink>
+    </li>
+  </ul>
+</Fragment>
+`;
+
+exports[`AnswerPicture small picture button 1`] = `
+<li
+  className="robbo-answers__picture"
+>
+  <button
+    aria-expanded={false}
+    aria-label="Enlarge the picture: Front view"
+    className="robbo-answers__picture-button"
+    onClick={[MockFunction usePicture.toggle]}
+    type="button"
+  >
+    <img
+      alt=""
+      loading="lazy"
+      onError={[MockFunction usePicture.handleError]}
+      src="http://localhost:18000/openassessment/storage/photo"
+    />
+  </button>
+  <span
+    className="robbo-answers__picture-caption"
+  >
+    Front view
+  </span>
+</li>
+`;
+
+exports[`AnswerValue text with its mark 1`] = `
+<dd
+  className="robbo-answers__value"
+>
+  <span
+    className="robbo-answers__value-mark"
+  >
+    mark
+  </span>
+  <div
+    className="robbo-answers__value-body"
+  >
+    <span
+      className="robbo-answers__value-text"
+    >
+      Two
+    </span>
+  </div>
+</dd>
 `;
 
 exports[`LearnerAnswers loaded snapshot 1`] = `
@@ -73,7 +158,7 @@ exports[`LearnerAnswers loaded snapshot 1`] = `
       className="robbo-answers__switch"
       onChange={[MockFunction hooks.handleOnlyErrorsChange]}
     >
-      Only problems with mistakes
+      Only mistakes and responses awaiting grading
     </Form.Switch>
   </div>
   <ol
@@ -120,7 +205,7 @@ exports[`LearnerAnswers loaded snapshot 1`] = `
 exports[`ProblemAnswers snapshot 1`] = `
 <li
   aria-labelledby="heading"
-  className="robbo-answers__problem"
+  className="robbo-answers__problem robbo-answers__problem--partially-correct"
 >
   <div
     className="robbo-answers__problem-header"

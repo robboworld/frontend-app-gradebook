@@ -1,3 +1,4 @@
+// Modifications Copyright (C) 2026 Robbo. See NOTICE at repository root.
 import React from 'react';
 import { shallow } from '@edx/react-unit-test-utils';
 
@@ -10,12 +11,12 @@ jest.mock('./hooks', () => jest.fn());
 
 const hookProps = {
   prev: {
-    disabled: 'prev-disabled',
+    disabled: false,
     onClick: jest.fn().mockName('hooks.prev.onClick'),
     text: 'prev-text',
   },
   next: {
-    disabled: 'next-disabled',
+    disabled: true,
     onClick: jest.fn().mockName('hooks.next.onClick'),
     text: 'next-text',
   },
@@ -48,6 +49,14 @@ describe('PageButtons component', () => {
       expect(button.props.disabled).toEqual(hookProps.next.disabled);
       expect(button.props.onClick).toEqual(hookProps.next.onClick);
       expect(button.children[0].el).toEqual(hookProps.next.text);
+    });
+    test('nothing while all learners fit on one page', () => {
+      usePageButtonsData.mockReturnValueOnce({
+        prev: { ...hookProps.prev, disabled: true },
+        next: hookProps.next,
+      });
+      el = shallow(<PageButtons />);
+      expect(el.isEmptyRender()).toEqual(true);
     });
   });
 });

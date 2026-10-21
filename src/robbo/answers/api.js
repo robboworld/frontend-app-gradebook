@@ -11,7 +11,8 @@ import { get, stringifyUrl } from 'data/services/lms/utils';
 
 /**
  * @return {Promise} [{ id, type, name, unitName, earned, possible, graded, attempts, saved,
- *   correctness, answers: [{ question, answer, correctAnswer, correctness }] | null, answersError }]
+ *   correctness, answers: [{ question, answer, files, correctAnswer, correctFiles, correctness }] | null,
+ *   answersError, awaitingGrade }]; files: [{ url, name, description, image }]
  */
 export const fetchLearnerAnswers = (courseId, userId, subsectionId) => get(stringifyUrl(
   `${getConfig().LMS_BASE_URL}/api/robbo/v1/gradebook/${courseId}/answers/`,
@@ -21,4 +22,9 @@ export const fetchLearnerAnswers = (courseId, userId, subsectionId) => get(strin
 /** The problem in the course (LMS jump_to leads to its unit). */
 export const problemUrl = (courseId, problemId) => (
   `${getConfig().LMS_BASE_URL}/courses/${courseId}/jump_to/${problemId}`
+);
+
+/** Files of the answers: course assets and uploaded files come with LMS paths. */
+export const fileUrl = (url) => (
+  url.startsWith('/') && !url.startsWith('//') ? `${getConfig().LMS_BASE_URL}${url}` : url
 );

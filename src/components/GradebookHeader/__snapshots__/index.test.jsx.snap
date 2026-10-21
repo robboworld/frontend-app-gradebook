@@ -5,27 +5,32 @@ exports[`GradebookHeader component render default view shapshot 1`] = `
   className="gradebook-header"
 >
   <a
-    className="mb-3"
+    className="robbo-gradebook-header__back"
     href="test-dashboard-url"
   >
-    <span
-      aria-hidden="true"
-    >
-      &lt;&lt; 
-    </span>
+    <Icon
+      size="sm"
+      src="ArrowBack"
+    />
     Back to Dashboard
   </a>
-  <h1>
+  <h1
+    className="robbo-gradebook-header__title"
+  >
     Gradebook
   </h1>
   <div
-    className="subtitle-row d-flex justify-content-between align-items-center"
+    className="subtitle-row robbo-gradebook-header__course"
   >
-    <h2
-      className="text-break"
+    <div
+      className="robbo-gradebook-header__course-name"
     >
-      test-course-id
-    </h2>
+      <h2
+        className="text-break"
+      >
+        test-course-id
+      </h2>
+    </div>
   </div>
 </div>
 `;
@@ -35,27 +40,32 @@ exports[`GradebookHeader component render frozen grades snapshot: show frozen wa
   className="gradebook-header"
 >
   <a
-    className="mb-3"
+    className="robbo-gradebook-header__back"
     href="test-dashboard-url"
   >
-    <span
-      aria-hidden="true"
-    >
-      &lt;&lt; 
-    </span>
+    <Icon
+      size="sm"
+      src="ArrowBack"
+    />
     Back to Dashboard
   </a>
-  <h1>
+  <h1
+    className="robbo-gradebook-header__title"
+  >
     Gradebook
   </h1>
   <div
-    className="subtitle-row d-flex justify-content-between align-items-center"
+    className="subtitle-row robbo-gradebook-header__course"
   >
-    <h2
-      className="text-break"
+    <div
+      className="robbo-gradebook-header__course-name"
     >
-      test-course-id
-    </h2>
+      <h2
+        className="text-break"
+      >
+        test-course-id
+      </h2>
+    </div>
   </div>
   <div
     className="alert alert-warning"
@@ -71,27 +81,32 @@ exports[`GradebookHeader component render show bulk management snapshot: show to
   className="gradebook-header"
 >
   <a
-    className="mb-3"
+    className="robbo-gradebook-header__back"
     href="test-dashboard-url"
   >
-    <span
-      aria-hidden="true"
-    >
-      &lt;&lt; 
-    </span>
+    <Icon
+      size="sm"
+      src="ArrowBack"
+    />
     Back to Dashboard
   </a>
-  <h1>
+  <h1
+    className="robbo-gradebook-header__title"
+  >
     Gradebook
   </h1>
   <div
-    className="subtitle-row d-flex justify-content-between align-items-center"
+    className="subtitle-row robbo-gradebook-header__course"
   >
-    <h2
-      className="text-break"
+    <div
+      className="robbo-gradebook-header__course-name"
     >
-      test-course-id
-    </h2>
+      <h2
+        className="text-break"
+      >
+        test-course-id
+      </h2>
+    </div>
     <Button
       onClick={[MockFunction hooks.handleToggleViewClick]}
       variant="tertiary"
@@ -107,27 +122,32 @@ exports[`GradebookHeader component render user cannot view gradebook snapshot: s
   className="gradebook-header"
 >
   <a
-    className="mb-3"
+    className="robbo-gradebook-header__back"
     href="test-dashboard-url"
   >
-    <span
-      aria-hidden="true"
-    >
-      &lt;&lt; 
-    </span>
+    <Icon
+      size="sm"
+      src="ArrowBack"
+    />
     Back to Dashboard
   </a>
-  <h1>
+  <h1
+    className="robbo-gradebook-header__title"
+  >
     Gradebook
   </h1>
   <div
-    className="subtitle-row d-flex justify-content-between align-items-center"
+    className="subtitle-row robbo-gradebook-header__course"
   >
-    <h2
-      className="text-break"
+    <div
+      className="robbo-gradebook-header__course-name"
     >
-      test-course-id
-    </h2>
+      <h2
+        className="text-break"
+      >
+        test-course-id
+      </h2>
+    </div>
   </div>
   <div
     className="alert alert-warning"

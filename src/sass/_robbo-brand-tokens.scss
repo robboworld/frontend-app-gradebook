@@ -1,0 +1,16 @@
+// Copyright (C) 2026 Robbo <https://robbo.ru>
+// SPDX-License-Identifier: AGPL-3.0-only
+// Part of the Robbo Open edX MFE overrides. See NOTICE at repository root.
+// Tokens: docs/design/robbo-brand-guidelines.md
+
+$robbo-brand-primary: #00af41;
+$robbo-brand-primary-dark: mix(#000000, $robbo-brand-primary, 28%);
+$robbo-brand-primary-darker: mix(#000000, $robbo-brand-primary, 38%);
+$robbo-brand-coal: #383838;
+$robbo-brand-grey: #989898;
+$robbo-brand-white: #ffffff;
+
+$robbo-font-stack: 'ProximaNova', 'Proxima Nova', Helvetica, Arial, sans-serif;
+
+$robbo-ui-primary-light: mix(#ffffff, $robbo-brand-primary, 93%);
+$robbo-ui-primary-light-pressed: mix(#ffffff, $robbo-brand-primary, 88%);

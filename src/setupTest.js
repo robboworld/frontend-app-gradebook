@@ -39,6 +39,9 @@ jest.mock('@openedx/paragon/icons', () => ({
   Cancel: 'Cancel',
   CheckCircle: 'CheckCircle',
   Error: 'Error',
+  InsertDriveFile: 'InsertDriveFile',
+  // Robbo: gradebook header.
+  ArrowBack: 'ArrowBack',
 }));
 
 jest.mock('@openedx/paragon', () => jest.requireActual('testUtils').mockNestedComponents({

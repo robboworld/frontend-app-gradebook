@@ -5,8 +5,8 @@ import PropTypes from 'prop-types';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 
-import messages from '../messages';
 import robboMessages from 'robbo/messages';
+import messages from '../messages';
 import SelectGroup from '../SelectGroup';
 import useAssignmentFilterData from './hooks';
 

@@ -3,12 +3,17 @@
 // Part of the Robbo Open edX MFE overrides. See NOTICE at repository root.
 //
 // «Ответы» tab of the grade modal (LearnerAnswers.jsx). Desktop-first: label and value side by
-// side; below sm they stack.
+// side; below sm they stack. The left rule of a problem card shows its status; pictures of the
+// answers are thumbnails that open full width in place.
 
 $robbo-answers-gap: map-get($spacers, 3);
 $robbo-answers-gap-sm: map-get($spacers, 2);
 $robbo-answers-hit-size: 44px;
 $robbo-answers-mark-size: 1.25rem; // Paragon <Icon size="sm">
+$robbo-answers-status-rule: 4px;
+$robbo-answers-thumb-height: 6rem;
+$robbo-answers-thumb-max-width: 12rem;
+$robbo-answers-picture-max-height: 70vh;
 
 // ModalHeaders float their items: the tabs start below them.
 .robbo-grade-modal__tabs {
@@ -69,7 +74,24 @@ $robbo-answers-mark-size: 1.25rem; // Paragon <Icon size="sm">
   min-width: 0;
   padding: $robbo-answers-gap;
   border: $border-width solid $border-color;
+  border-left: $robbo-answers-status-rule solid $gray-300;
   border-radius: $border-radius;
+}
+
+.robbo-answers__problem--correct {
+  border-left-color: $success;
+}
+
+.robbo-answers__problem--incorrect {
+  border-left-color: $danger;
+}
+
+.robbo-answers__problem--partially-correct {
+  border-left-color: $warning;
+}
+
+.robbo-answers__problem--awaiting {
+  border-left-color: $robbo-brand-grey;
 }
 
 .robbo-answers__problem-header {
@@ -150,6 +172,13 @@ $robbo-answers-mark-size: 1.25rem; // Paragon <Icon size="sm">
   min-width: 0;
 }
 
+.robbo-answers__value-body {
+  display: grid;
+  flex: 1 1 auto;
+  gap: $robbo-answers-gap-sm;
+  min-width: 0;
+}
+
 // Long texts and code answers keep their line breaks and never widen the modal.
 .robbo-answers__value-text {
   min-width: 0;
@@ -177,6 +206,106 @@ $robbo-answers-mark-size: 1.25rem; // Paragon <Icon size="sm">
 
 .robbo-answers__value-icon--partially-correct {
   color: $warning-700;
+}
+
+// Thumbnails in a row; an opened picture takes the whole row and its natural size up to the
+// width of the modal.
+.robbo-answers__pictures,
+.robbo-answers__files {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $robbo-answers-gap-sm;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.robbo-answers__picture {
+  display: grid;
+  gap: map-get($spacers, 1);
+  max-width: $robbo-answers-thumb-max-width;
+  min-width: 0;
+}
+
+.robbo-answers__picture-button {
+  display: block;
+  padding: 0;
+  overflow: hidden;
+  cursor: zoom-in;
+  background-color: $light-200;
+  border: $border-width solid $border-color;
+  border-radius: $border-radius;
+
+  &:hover {
+    border-color: $robbo-brand-primary;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $robbo-brand-primary;
+    outline-offset: 2px;
+  }
+
+  img {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: $robbo-answers-thumb-height;
+  }
+}
+
+.robbo-answers__picture--expanded {
+  flex-basis: 100%;
+  max-width: 100%;
+
+  .robbo-answers__picture-button {
+    justify-self: start;
+    max-width: 100%;
+    cursor: zoom-out;
+  }
+
+  img {
+    max-height: $robbo-answers-picture-max-height;
+  }
+}
+
+.robbo-answers__picture-caption {
+  font-size: $font-size-sm;
+  color: $gray-700;
+  overflow-wrap: anywhere;
+}
+
+.robbo-answers__picture-error {
+  flex-basis: 100%;
+  font-size: $font-size-sm;
+  color: $gray-700;
+}
+
+.robbo-answers__files {
+  flex-direction: column;
+}
+
+.robbo-answers__file {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: map-get($spacers, 1) $robbo-answers-gap-sm;
+  min-width: 0;
+}
+
+.robbo-answers__file-icon {
+  flex: none;
+  color: $gray-700;
+}
+
+.robbo-answers__file-name {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.robbo-answers__file-description {
+  font-size: $font-size-sm;
+  color: $gray-700;
 }
 
 .robbo-answers__link {
