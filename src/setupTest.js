@@ -17,6 +17,8 @@ jest.mock('@edx/frontend-platform/i18n', () => {
     useIntl: jest.fn(() => ({
       formatMessage,
       formatDate,
+      // Robbo: points in the grade modal.
+      formatNumber: (value) => `${value}`,
     })),
     IntlProvider: () => 'IntlProvider',
     defineMessages: m => m,
@@ -42,6 +44,9 @@ jest.mock('@openedx/paragon/icons', () => ({
   InsertDriveFile: 'InsertDriveFile',
   // Robbo: gradebook header.
   ArrowBack: 'ArrowBack',
+  // Robbo: export of the table (src/robbo/export).
+  Download: 'Download',
+  PictureAsPdf: 'PictureAsPdf',
 }));
 
 jest.mock('@openedx/paragon', () => jest.requireActual('testUtils').mockNestedComponents({

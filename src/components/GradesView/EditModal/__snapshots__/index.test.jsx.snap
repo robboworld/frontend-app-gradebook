@@ -42,11 +42,15 @@ exports[`EditModal component answers tab snapshot 1`] = `
             test-error
           </Alert>
           <OverrideTable />
-          <div>
-            Showing most recent actions (max 5). To see more, please contact support
-          </div>
-          <div>
-            Note: Once you save, your changes will be visible to students.
+          <div
+            className="robbo-override-notes"
+          >
+            <div>
+              Showing most recent actions (max 5). To see more, please contact support
+            </div>
+            <div>
+              Note: Once you save, your changes will be visible to students.
+            </div>
           </div>
         </Tab>
       </Tabs>
@@ -143,11 +147,15 @@ exports[`EditModal component grade form tab snapshot 1`] = `
             test-error
           </Alert>
           <OverrideTable />
-          <div>
-            Showing most recent actions (max 5). To see more, please contact support
-          </div>
-          <div>
-            Note: Once you save, your changes will be visible to students.
+          <div
+            className="robbo-override-notes"
+          >
+            <div>
+              Showing most recent actions (max 5). To see more, please contact support
+            </div>
+            <div>
+              Note: Once you save, your changes will be visible to students.
+            </div>
           </div>
         </Tab>
       </Tabs>

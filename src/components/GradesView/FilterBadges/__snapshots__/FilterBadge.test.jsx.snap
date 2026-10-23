@@ -1,9 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`FilterBadge render do not hide value snapshot 1`] = `
-<div>
+<div
+  className="robbo-filter-badge"
+>
   <span
-    className="badge badge-info"
+    className="robbo-filter-badge__text"
   >
     <span
       data-testid="display-name"
@@ -15,33 +17,35 @@ exports[`FilterBadge render do not hide value snapshot 1`] = `
     >
       : a common value
     </span>
-    <Button
-      aria-label="Remove filter"
-      className="btn-info"
-      onClick={
-        {
-          "handleClose": [
-            "some",
-            "filters",
-          ],
-        }
-      }
-    >
-      <span
-        aria-hidden="true"
-      >
-        ×
-      </span>
-    </Button>
   </span>
-  <br />
+  <Button
+    aria-label="Remove filter"
+    className="robbo-filter-badge__remove"
+    onClick={
+      {
+        "handleClose": [
+          "some",
+          "filters",
+        ],
+      }
+    }
+    variant="link"
+  >
+    <span
+      aria-hidden="true"
+    >
+      ×
+    </span>
+  </Button>
 </div>
 `;
 
 exports[`FilterBadge render hide Value snapshot 1`] = `
-<div>
+<div
+  className="robbo-filter-badge"
+>
   <span
-    className="badge badge-info"
+    className="robbo-filter-badge__text"
   >
     <span
       data-testid="display-name"
@@ -51,25 +55,25 @@ exports[`FilterBadge render hide Value snapshot 1`] = `
     <span
       data-testid="filter-value"
     />
-    <Button
-      aria-label="Remove filter"
-      className="btn-info"
-      onClick={
-        {
-          "handleClose": [
-            "some",
-            "filters",
-          ],
-        }
-      }
-    >
-      <span
-        aria-hidden="true"
-      >
-        ×
-      </span>
-    </Button>
   </span>
-  <br />
+  <Button
+    aria-label="Remove filter"
+    className="robbo-filter-badge__remove"
+    onClick={
+      {
+        "handleClose": [
+          "some",
+          "filters",
+        ],
+      }
+    }
+    variant="link"
+  >
+    <span
+      aria-hidden="true"
+    >
+      ×
+    </span>
+  </Button>
 </div>
 `;

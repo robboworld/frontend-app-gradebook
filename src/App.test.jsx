@@ -1,3 +1,4 @@
+// Modifications Copyright (C) 2026 Robbo. See NOTICE at repository root.
 import React from 'react';
 import { shallow } from '@edx/react-unit-test-utils';
 
@@ -16,10 +17,9 @@ jest.mock('react-router-dom', () => ({
 jest.mock('@edx/frontend-platform/react', () => ({
   AppProvider: () => 'AppProvider',
 }));
-jest.mock('@edx/frontend-component-footer', () => ({ FooterSlot: 'FooterSlot' }));
 jest.mock('data/store', () => 'testStore');
 jest.mock('containers/GradebookPage', () => 'GradebookPage');
-jest.mock('@edx/frontend-component-header', () => 'Header');
+jest.mock('./robbo-layout', () => ({ RobboHeader: 'RobboHeader' }));
 jest.mock('./head/Head', () => 'Head');
 jest.mock('./robbo-errors', () => ({ RobboErrorBoundary: 'RobboErrorBoundary' }));
 
@@ -57,8 +57,15 @@ describe('App router component', () => {
       test('second child inside RobboErrorBoundary', () => {
         expect(secondChild[1].type).toBe('div');
       });
+      test('the ROBBO page layout', () => {
+        expect(secondChild[1].props.className).toEqual('robbo-layout-page');
+      });
+      test('no footer: only the header and the page', () => {
+        expect(secondChild[1].children.map((child) => child.type)).toEqual(['RobboHeader', 'main']);
+      });
       test('Header is above/outside-of the routing', () => {
-        expect(secondChild[1].children[0].type).toBe('Header');
+        expect(secondChild[1].children[0].type).toBe('RobboHeader');
+        expect(secondChild[1].children[0].props.collapseNavIntoUserMenuOnNarrow).toEqual(true);
         expect(secondChild[1].children[1].type).toBe('main');
       });
       test('Routing - GradebookPage is only route', () => {

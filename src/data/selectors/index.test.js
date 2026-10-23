@@ -81,7 +81,7 @@ describe('root selectors', () => {
           const { filterOrder, ...rest } = testConfig;
           expect(config).toEqual({
             isDefault: true,
-            value: `${values[0]} - ${values[1]}`,
+            value: `${values[0]}–${values[1]} %`,
             ...rest,
           });
         });
@@ -102,7 +102,7 @@ describe('root selectors', () => {
             const { filterOrder, ...rest } = testConfig;
             expect(config).toEqual({
               isDefault: false,
-              value: `${values[0]} - ${values[1]}`,
+              value: `${values[0]}–${values[1]} %`,
               ...rest,
             });
           });

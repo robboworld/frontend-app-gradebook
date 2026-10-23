@@ -28,7 +28,14 @@ exports[`GradesView component render snapshot 1`] = `
     <ScoreViewInput />
     <BulkManagementControls />
   </div>
-  <FilteredUsersLabel />
+  <div
+    className="robbo-table-toolbar"
+  >
+    <div>
+      <FilteredUsersLabel />
+    </div>
+    <GradebookExport />
+  </div>
   <GradesLoadError />
   <GradebookTable />
   <PageButtons />

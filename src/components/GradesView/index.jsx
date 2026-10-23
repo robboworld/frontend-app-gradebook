@@ -3,6 +3,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import GradebookExport from 'robbo/export/GradebookExport';
+
 import BulkManagementControls from './BulkManagementControls';
 import EditModal from './EditModal';
 import FilterBadges from './FilterBadges';
@@ -51,7 +53,11 @@ export const GradesView = ({ updateQueryParams }) => {
         <BulkManagementControls />
       </div>
 
-      <FilteredUsersLabel />
+      {/* Robbo: export of the table (src/robbo/export) on the line of the learner count. */}
+      <div className="robbo-table-toolbar">
+        <div><FilteredUsersLabel /></div>
+        <GradebookExport />
+      </div>
       <GradesLoadError />
 
       <GradebookTable />

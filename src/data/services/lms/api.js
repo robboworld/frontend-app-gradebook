@@ -1,3 +1,4 @@
+// Modifications Copyright (C) 2026 Robbo. See NOTICE at repository root.
 import { StrictDict } from 'utils';
 
 import urls, {
@@ -27,6 +28,7 @@ const tracks = () => get(urls.getTracksUrl());
  * @param {nunber} cohort - selected cohort filter
  * @param {string} track - selected track filter
  * @param {object} options - additional optional filter values
+ *   (Robbo: options.pageSize — larger pages for the export, src/robbo/export)
  * @return {Promise} - get response
  */
 const gradebookData = (searchText, cohort, track, options = {}) => {
@@ -34,7 +36,7 @@ const gradebookData = (searchText, cohort, track, options = {}) => {
     throw new Error(messages.errors.missingAssignment);
   }
   const queryParams = {
-    [paramKeys.pageSize]: pageSize,
+    [paramKeys.pageSize]: options.pageSize || pageSize,
     [paramKeys.userContains]: searchText,
     [paramKeys.cohortId]: cohort,
     [paramKeys.enrollmentMode]: track,
