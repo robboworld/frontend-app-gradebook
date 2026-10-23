@@ -1,0 +1,97 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ReportModal snapshot 1`] = `
+<ModalDialog
+  className="robbo-grade-modal robbo-report"
+  hasCloseButton={true}
+  isFullscreenOnMobile={true}
+  isOpen={true}
+  onClose={[MockFunction report.close]}
+  size="lg"
+  title="Progress report (PDF)"
+>
+  <ModalDialog.Header>
+    <ModalDialog.Title>
+      Progress report (PDF)
+    </ModalDialog.Title>
+  </ModalDialog.Header>
+  <ModalDialog.Body>
+    <p
+      className="robbo-report__hint"
+    >
+      Pick the learners. The list is sorted by the last activity in the course.
+    </p>
+    <LearnerList
+      report={
+        {
+          "allVisibleSelected": false,
+          "canGenerate": true,
+          "close": [MockFunction report.close],
+          "generate": [MockFunction report.generate],
+          "generating": false,
+          "generation": {
+            "done": 0,
+            "status": "idle",
+            "total": 0,
+          },
+          "handleSearchChange": [MockFunction report.handleSearchChange],
+          "isOpen": true,
+          "isSelected": [Function],
+          "learnersStatus": "loaded",
+          "retry": [MockFunction report.retry],
+          "search": "",
+          "selected": [
+            1,
+          ],
+          "toggle": [Function],
+          "toggleAll": [MockFunction report.toggleAll],
+          "visible": [
+            {
+              "email": "anna@example.com",
+              "fullName": "Анна Смирнова",
+              "id": 1,
+              "lastActivity": "2026-10-20T16:05:00Z",
+              "username": "anna",
+            },
+            {
+              "email": "",
+              "fullName": "",
+              "id": 3,
+              "lastActivity": null,
+              "username": "zoe",
+            },
+          ],
+        }
+      }
+    />
+  </ModalDialog.Body>
+  <ModalDialog.Footer>
+    <div
+      className="robbo-report__footer"
+    >
+      <span
+        className="robbo-report__status"
+        role="status"
+      >
+        Selected: 1
+      </span>
+      <ActionRow>
+        <Button
+          disabled={false}
+          onClick={[MockFunction report.close]}
+          variant="tertiary"
+        >
+          Cancel
+        </Button>
+        <Button
+          disabled={false}
+          onClick={[MockFunction report.generate]}
+          variant="primary"
+        >
+          Generate PDF
+        </Button>
+      </ActionRow>
+    </div>
+  </ModalDialog.Footer>
+</ModalDialog>
+`;

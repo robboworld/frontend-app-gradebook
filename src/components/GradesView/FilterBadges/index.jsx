@@ -1,4 +1,5 @@
 /* eslint-disable import/no-named-as-default */
+// Modifications Copyright (C) 2026 Robbo. See NOTICE at repository root.
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -12,7 +13,7 @@ import FilterBadge from './FilterBadge';
  * @param {func} handleClose - event taking a list of filternames to reset
  */
 export const FilterBadges = ({ handleClose }) => (
-  <div>
+  <div className="robbo-filter-badges">
     {badgeOrder.map(filterName => (
       <FilterBadge key={filterName} {...{ handleClose, filterName }} />
     ))}

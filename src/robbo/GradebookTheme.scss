@@ -3,9 +3,10 @@
 // Part of the Robbo Open edX MFE overrides. See NOTICE at repository root.
 //
 // ROBBO look of the gradebook page and of the grade modal (docs/design/robbo-brand-guidelines.md):
-// green links, grades and tabs instead of Paragon's blue and navy, a compact header. The brand
-// package sets $primary only; links and tabs use Paragon's own palette, so they are set here.
-// The modal is rendered outside the page, hence its own root class.
+// green links, grades and tabs, green focus rings (as in profile and account), a compact header
+// and a filter sidebar that sits beside the page instead of pushing it off the screen.
+// Paragon's primary scale comes from the brand green (App.scss). The modal is rendered outside
+// the page, hence its own root class.
 
 $robbo-gradebook-link: $robbo-brand-primary-dark; // brand green dark enough for text
 $robbo-gradebook-link-hover: $robbo-brand-primary-darker;
@@ -13,6 +14,12 @@ $robbo-gradebook-accent: $robbo-brand-primary;
 $robbo-gradebook-gap: map-get($spacers, 3);
 $robbo-gradebook-gap-sm: map-get($spacers, 2);
 $robbo-gradebook-tab-rule: 2px;
+$robbo-gradebook-sidebar-width: 350px; // WithSidebar.scss
+
+#root,
+#paragon-portal-root {
+  @include robbo-paragon-focus-rings($robbo-brand-primary-dark, $robbo-brand-primary-darker);
+}
 
 @mixin robbo-gradebook-links {
   a:not(.btn),
@@ -26,8 +33,21 @@ $robbo-gradebook-tab-rule: 2px;
   }
 }
 
+// Upstream gives the content the full viewport width, so with the sidebar open the page ran
+// 350px off the screen. The content takes what is left; the table scrolls on its own.
+.page-gradebook .sidebar-contents {
+  flex: 1 1 auto;
+  min-width: 0;
+
+  &.opening {
+    width: auto;
+  }
+}
+
 .gradebook-content {
   @include robbo-gradebook-links;
+  width: auto;
+  min-width: 0;
 
   h3 {
     margin-bottom: $robbo-gradebook-gap-sm;
@@ -120,4 +140,297 @@ $robbo-gradebook-tab-rule: 2px;
     color: $robbo-gradebook-link;
     border-bottom-color: $robbo-gradebook-accent;
   }
+}
+
+// Filter sidebar: a white panel with a title, sections divided by rules instead of boxed cards.
+// Open, it stands in the row beside the page, so a long list of filters makes the page taller
+// instead of being cut at the end of a short table.
+.page-gradebook aside.sidebar {
+  z-index: 2;
+  flex: none;
+  background-color: $white;
+  border-right: $border-width solid $border-color;
+
+  &.open {
+    position: relative;
+    height: auto;
+  }
+
+  @include media-breakpoint-down(sm) {
+    width: 100%;
+    max-width: 100vw;
+
+    &.open {
+      position: absolute;
+      min-height: 100%;
+    }
+  }
+
+  .filter-sidebar-header {
+    align-items: center;
+    padding: $robbo-gradebook-gap;
+    border-bottom: $border-width solid $border-color;
+  }
+
+  .collapsible-card {
+    margin: 0;
+    border: 0;
+    border-bottom: $border-width solid $border-color;
+    border-radius: 0;
+  }
+
+  .collapsible-trigger {
+    padding: $robbo-gradebook-gap;
+    font-weight: $font-weight-bold;
+    color: $robbo-brand-coal;
+    background: none;
+    border: 0;
+
+    &:hover,
+    &:focus-visible {
+      color: $robbo-gradebook-link;
+      background-color: $robbo-ui-primary-light;
+    }
+
+    .collapsible-icon {
+      color: $robbo-gradebook-link;
+    }
+  }
+
+  .collapsible-body {
+    padding: 0 $robbo-gradebook-gap $robbo-gradebook-gap;
+    border: 0;
+  }
+
+  .btn-icon-primary:not(:hover):not(:active) {
+    color: $robbo-gradebook-link;
+  }
+}
+
+// The open panel takes its own place in the row; below sm it covers the page.
+.page-gradebook .sidebar.open + .sidebar-contents {
+  margin-left: 0;
+}
+
+.robbo-filters__title {
+  display: flex;
+  align-items: center;
+  gap: $robbo-gradebook-gap-sm;
+  margin: 0;
+  font-size: $h4-font-size;
+}
+
+// Chips of the chosen filters, in a row above «Шаг 2».
+.robbo-filter-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $robbo-gradebook-gap-sm;
+  margin: $robbo-gradebook-gap-sm 0 $robbo-gradebook-gap;
+
+  &:empty {
+    display: none;
+  }
+}
+
+.robbo-filter-badge {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  min-height: 2.25rem;
+  padding-left: map-get($spacers, 3);
+  font-size: $font-size-sm;
+  color: $robbo-brand-coal;
+  background-color: $robbo-ui-primary-light;
+  border: $border-width solid $robbo-brand-primary;
+  border-radius: 999px;
+}
+
+.robbo-filter-badge__text {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.gradebook-content .robbo-filter-badge__remove.btn-link {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  font-size: $font-size-lg;
+  line-height: 1;
+  color: $robbo-gradebook-link;
+  text-decoration: none;
+  border-radius: 50%;
+
+  &:hover,
+  &:focus-visible {
+    color: $white;
+    background-color: $robbo-gradebook-link;
+  }
+}
+
+// Labels of the grade modal header (HistoryHeader) in one column: upstream pads each label
+// differently, so a long one («Исходная оценка») pushed its value aside.
+.robbo-grade-modal .grade-history-header {
+  min-width: 11rem;
+  padding-right: $robbo-gradebook-gap;
+}
+
+// The learner count and the export buttons on one line above the table; below sm they wrap.
+.robbo-table-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: $robbo-gradebook-gap-sm $robbo-gradebook-gap;
+  margin-bottom: $robbo-gradebook-gap-sm;
+}
+
+.robbo-export {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $robbo-gradebook-gap-sm;
+
+  .btn {
+    min-height: 2.5rem;
+  }
+}
+
+.robbo-export__status,
+.robbo-export__error {
+  font-size: $font-size-sm;
+}
+
+.robbo-export__status {
+  color: $gray-700;
+}
+
+.robbo-export__error {
+  color: $danger;
+}
+
+
+// Window of the PDF progress report (export/report/ReportModal.jsx): the list scrolls inside the
+// body, the footer keeps the count and the buttons.
+$robbo-report-list-height: 50vh;
+// Room for the checkbox border and its focus ring inside the scrolled list, which clips them.
+$robbo-report-inset: map-get($spacers, 2);
+
+.robbo-report__hint {
+  margin-bottom: $robbo-gradebook-gap;
+  color: $gray-700;
+}
+
+.robbo-report__loading {
+  display: flex;
+  justify-content: center;
+  padding: map-get($spacers, 5) 0;
+}
+
+.robbo-report__select-all {
+  width: 100%;
+  padding: $robbo-gradebook-gap-sm $robbo-report-inset;
+  font-weight: $font-weight-bold;
+  border-bottom: $border-width solid $border-color;
+}
+
+.robbo-report__list {
+  max-height: $robbo-report-list-height;
+  margin: 0;
+  padding: 0 $robbo-report-inset;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.robbo-report__learner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: map-get($spacers, 1) $robbo-gradebook-gap;
+  padding: $robbo-gradebook-gap-sm 0;
+  border-bottom: $border-width solid $border-color;
+}
+
+.robbo-report__checkbox {
+  min-width: 0;
+
+  .pgn__form-checkbox-input {
+    flex: none;
+  }
+}
+
+// Name over username and email.
+.robbo-report__label {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  font-weight: $font-weight-normal;
+}
+
+.robbo-report__name {
+  overflow-wrap: anywhere;
+}
+
+.robbo-report__meta,
+.robbo-report__activity,
+.robbo-report__empty {
+  font-size: $font-size-sm;
+  color: $gray-700;
+}
+
+.robbo-report__meta {
+  overflow-wrap: anywhere;
+}
+
+.robbo-report__activity {
+  margin-left: auto;
+}
+
+.robbo-report__footer {
+  display: flex;
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: $robbo-gradebook-gap-sm $robbo-gradebook-gap;
+}
+
+.robbo-report__status {
+  color: $gray-700;
+}
+
+.robbo-report__error {
+  color: $danger;
+}
+
+// «Новая оценка» in the grade form: a field for a few digits («100,5») with «/ N» beside it,
+// narrow enough for the column on a phone.
+$robbo-adjusted-grade-width: 4.5rem;
+$robbo-adjusted-grade-padding-x: map-get($spacers, 2);
+
+.robbo-adjusted-grade {
+  display: inline-flex;
+  align-items: center;
+  gap: $robbo-gradebook-gap-sm;
+  white-space: nowrap;
+
+  // Paragon puts the class on the decorator group around the input.
+  .robbo-adjusted-grade__input {
+    flex: none;
+    width: $robbo-adjusted-grade-width;
+
+    .form-control {
+      padding-right: $robbo-adjusted-grade-padding-x;
+      padding-left: $robbo-adjusted-grade-padding-x;
+    }
+  }
+}
+
+// Notes under the table of grade changes.
+.robbo-override-notes {
+  margin-top: $robbo-gradebook-gap;
 }

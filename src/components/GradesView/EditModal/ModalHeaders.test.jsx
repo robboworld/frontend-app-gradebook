@@ -1,3 +1,4 @@
+// Modifications Copyright (C) 2026 Robbo. See NOTICE at repository root.
 import React from 'react';
 import { shallow } from '@edx/react-unit-test-utils';
 
@@ -5,6 +6,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { selectors } from 'data/redux/hooks';
 
 import { formatMessage } from 'testUtils';
+import robboMessages from 'robbo/messages';
 
 import HistoryHeader from './HistoryHeader';
 import ModalHeaders, { HistoryKeys } from './ModalHeaders';
@@ -79,6 +81,41 @@ describe('ModalHeaders', () => {
         id: HistoryKeys.currentGrade,
         label: formatMessage(messages.currentGradeHeader),
         value: gradeData.gradeOverrideCurrentEarnedGradedOverride,
+      });
+    });
+    // Robbo: points «2 из 7»; without an override the current grade is the original one.
+    describe('grades in points', () => {
+      const values = (data) => {
+        selectors.grades.useGradeData.mockReturnValueOnce(data);
+        return shallow(<ModalHeaders />).instance.findByType(HistoryHeader).slice(2)
+          .map((header) => header.props.value);
+      };
+      test('original and changed grade out of the maximum', () => {
+        expect(values({
+          gradeOriginalEarnedGraded: 2,
+          gradeOriginalPossibleGraded: 7,
+          gradeOverrideCurrentEarnedGradedOverride: 5,
+          gradeOverrideCurrentPossibleGradedOverride: 7,
+        })).toEqual([
+          formatMessage(robboMessages.gradePoints, { earned: '2', possible: '7' }),
+          formatMessage(robboMessages.gradePoints, { earned: '5', possible: '7' }),
+        ]);
+      });
+      test('not changed: the original grade counts', () => {
+        expect(values({
+          gradeOriginalEarnedGraded: 0,
+          gradeOriginalPossibleGraded: 7,
+          gradeOverrideCurrentEarnedGradedOverride: null,
+        })).toEqual([
+          formatMessage(robboMessages.gradePoints, { earned: '0', possible: '7' }),
+          formatMessage(robboMessages.gradeNotChanged),
+        ]);
+      });
+      test('nothing before the history loads', () => {
+        expect(values({
+          gradeOriginalEarnedGraded: null,
+          gradeOverrideCurrentEarnedGradedOverride: null,
+        })).toEqual([null, null]);
       });
     });
   });

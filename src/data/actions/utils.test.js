@@ -1,3 +1,4 @@
+// Modifications Copyright (C) 2026 Robbo. See NOTICE at repository root.
 import { createAction } from '@reduxjs/toolkit';
 import * as utils from './utils';
 
@@ -7,12 +8,10 @@ jest.mock('@reduxjs/toolkit', () => ({
 
 describe('redux action utils', () => {
   describe('formatDateForDisplay', () => {
+    // Robbo: in the interface language and the viewer's time zone (TZ=GMT in tests).
     it('returns the datetime as a formatted string', () => {
-      // using toLocaleTimeString because mac/linux seems to generate strings
-      const date = new Date('Jun 3 2021 11:59 AM EDT');
-      expect(utils.formatDateForDisplay(date)).toEqual(
-        `June 3, 2021 at ${date.toLocaleTimeString('en-US', utils.timeOptions)}`,
-      );
+      const date = new Date('2021-06-03T15:59:00Z');
+      expect(utils.formatDateForDisplay(date)).toEqual('3 июня 2021 г. в 15:59');
     });
   });
   describe('sortAlphaAsc', () => {

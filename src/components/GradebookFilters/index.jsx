@@ -1,3 +1,4 @@
+// Modifications Copyright (C) 2026 Robbo. See NOTICE at repository root.
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -10,6 +11,7 @@ import {
 import { Close } from '@openedx/paragon/icons';
 import { useIntl } from '@edx/frontend-platform/i18n';
 
+import robboMessages from 'robbo/messages';
 import messages from './messages';
 import AssignmentTypeFilter from './AssignmentTypeFilter';
 import AssignmentFilter from './AssignmentFilter';
@@ -24,11 +26,16 @@ export const GradebookFilters = ({ updateQueryParams }) => {
     includeCourseTeamMembers,
   } = useGradebookFiltersData({ updateQueryParams });
   const { formatMessage } = useIntl();
-  const collapsibleClassName = 'filter-group mb-3';
+  // Robbo: groups are divided by rules (robbo/GradebookTheme.scss), not spaced cards.
+  const collapsibleClassName = 'filter-group';
   return (
     <>
       <div className="filter-sidebar-header">
-        <h2><Icon className="fa fa-filter" /></h2>
+        {/* Robbo: a title next to the icon (robbo/GradebookTheme.scss). */}
+        <h2 className="robbo-filters__title">
+          <Icon className="fa fa-filter" />
+          {formatMessage(robboMessages.filtersTitle)}
+        </h2>
         <IconButton
           className="p-1"
           onClick={closeMenu}

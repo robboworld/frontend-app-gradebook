@@ -1,6 +1,10 @@
 // frontend-app-*/src/index.scss
 @import "~@edx/brand/paragon/fonts";
 @import "~@edx/brand/paragon/variables";
+// Robbo: Paragon's primary scale (hover, focus, active states) from the brand green; the brand
+// package of this image does not set it, so the states were navy.
+@import "./sass/robbo-brand-tokens";
+$primary: $robbo-brand-primary;
 @import "~@openedx/paragon/scss/core/core";
 @import "~@edx/brand/paragon/overrides";
 
@@ -10,13 +14,12 @@ $fa-font-path: "~font-awesome/fonts";
 $input-focus-box-shadow: $input-box-shadow; // hack to get upgrade to paragon 4.0.0 to work
 
 @import "~@edx/frontend-component-header/dist/index";
-@import "~@edx/frontend-component-footer/dist/_footer";
 
 @import "./components/GradesView/GradesView";
 @import "./components/BulkManagementHistoryView/BulkManagementHistoryView";
 @import "./components/WithSidebar/WithSidebar";
 @import "./components/GradebookFilters/GradebookFilters";
 // Robbo
-@import "./sass/robbo-brand-tokens";
+@import "./sass/robbo-paragon-focus";
 @import "./robbo/GradebookTheme";
 @import "./robbo/answers/LearnerAnswers";

@@ -101,8 +101,11 @@ describe('EditModal component', () => {
       expect(children[0].props.show).toEqual(true);
       expect(children[0].children[0].el).toEqual(hookProps.error);
       expect(children[1]).toMatchObject(shallow(<OverrideTable />));
-      expect(children[2].children[0].el).toEqual(formatMessage(messages.visibility));
-      expect(children[3].children[0].el).toEqual(formatMessage(messages.saveVisibility));
+      // The notes sit in a block of their own, set apart from the table.
+      expect(children[2].props.className).toEqual('robbo-override-notes');
+      const [visibility, saveVisibility] = children[2].children;
+      expect(visibility.children[0].el).toEqual(formatMessage(messages.visibility));
+      expect(saveVisibility.children[0].el).toEqual(formatMessage(messages.saveVisibility));
     });
     test('only a close button in the footer', () => {
       const buttons = footerButtons();

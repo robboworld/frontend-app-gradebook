@@ -12,6 +12,8 @@ import robboMessages from 'robbo/messages';
  * FilterBadge
  * Base filter badge component, that displays a name and a close button.
  * If showValue is true, it will also display the included value.
+ * Robbo: a light green chip with a small remove button (robbo/GradebookTheme.scss) instead of a
+ * blue badge holding a full-size button; the chips sit in a row.
  * @param {func} handleClose - close/dismiss filter event, taking a list of filternames
  *   to reset when the filter badge closes.
  * @param {string} filterName - api filter name (for redux connector)
@@ -32,21 +34,21 @@ export const FilterBadge = ({
     return null;
   }
   return (
-    <div>
-      <span className="badge badge-info">
+    <div className="robbo-filter-badge">
+      <span className="robbo-filter-badge__text">
         <span data-testid="display-name">{formatMessage(displayName)}</span>
         <span data-testid="filter-value">
           {!hideValue ? `: ${value}` : ''}
         </span>
-        <Button
-          className="btn-info"
-          aria-label={formatMessage(robboMessages.removeFilter)}
-          onClick={handleClose(connectedFilters)}
-        >
-          <span aria-hidden="true">&times;</span>
-        </Button>
       </span>
-      <br />
+      <Button
+        variant="link"
+        className="robbo-filter-badge__remove"
+        aria-label={formatMessage(robboMessages.removeFilter)}
+        onClick={handleClose(connectedFilters)}
+      >
+        <span aria-hidden="true">&times;</span>
+      </Button>
     </div>
   );
 };

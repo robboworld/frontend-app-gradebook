@@ -39,7 +39,8 @@ export const filterBadgeConfig = (state, name) => {
   const filterValue = module.filterBadgeValues[name](state);
   const { filterOrder, ...config } = filterConfig[name];
   const isRange = !!filterOrder;
-  const value = isRange ? `${filterValue[0]} - ${filterValue[1]}` : filterValue;
+  // Robbo: grade ranges are percents: «0–100 %».
+  const value = isRange ? `${filterValue[0]}–${filterValue[1]} %` : filterValue;
   const isDefault = (isRange
     ? (
       filters.isDefault(filterOrder[0], filterValue[0])

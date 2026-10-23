@@ -79,8 +79,11 @@ export const EditModal = () => {
                   {error}
                 </Alert>
                 <OverrideTable />
-                <div>{formatMessage(messages.visibility)}</div>
-                <div>{formatMessage(messages.saveVisibility)}</div>
+                {/* Robbo: set apart from the table above. */}
+                <div className="robbo-override-notes">
+                  <div>{formatMessage(messages.visibility)}</div>
+                  <div>{formatMessage(messages.saveVisibility)}</div>
+                </div>
               </Tab>
             </Tabs>
           )}

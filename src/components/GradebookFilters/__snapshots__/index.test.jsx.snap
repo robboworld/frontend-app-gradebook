@@ -5,10 +5,13 @@ exports[`GradebookFilters render snapshot 1`] = `
   <div
     className="filter-sidebar-header"
   >
-    <h2>
+    <h2
+      className="robbo-filters__title"
+    >
       <Icon
         className="fa fa-filter"
       />
+      Filters
     </h2>
     <IconButton
       alt="Close Filters"
@@ -20,7 +23,7 @@ exports[`GradebookFilters render snapshot 1`] = `
     />
   </div>
   <Collapsible
-    className="filter-group mb-3"
+    className="filter-group"
     defaultOpen={true}
     title="Assignments"
   >
@@ -37,7 +40,7 @@ exports[`GradebookFilters render snapshot 1`] = `
     </div>
   </Collapsible>
   <Collapsible
-    className="filter-group mb-3"
+    className="filter-group"
     defaultOpen={true}
     title="Overall Grade"
   >
@@ -46,7 +49,7 @@ exports[`GradebookFilters render snapshot 1`] = `
     />
   </Collapsible>
   <Collapsible
-    className="filter-group mb-3"
+    className="filter-group"
     defaultOpen={true}
     title="Student Groups"
   >
@@ -55,7 +58,7 @@ exports[`GradebookFilters render snapshot 1`] = `
     />
   </Collapsible>
   <Collapsible
-    className="filter-group mb-3"
+    className="filter-group"
     defaultOpen={true}
     title="Include Course Team Members"
   >

@@ -1,3 +1,4 @@
+// Modifications Copyright (C) 2026 Robbo. See NOTICE at repository root.
 import api from './api';
 import { pageSize, paramKeys } from './constants';
 import messages from './messages';
@@ -110,6 +111,13 @@ describe('lms service api', () => {
               [paramKeys.assignmentGradeMax]: undefined,
               [paramKeys.assignmentGradeMin]: undefined,
             }));
+          })
+        ));
+        // Robbo: the export asks for larger pages (src/robbo/export).
+        test('pageSize option', () => (
+          api.fetch.gradebookData(searchText, cohort, track, { pageSize: 200 }).then(() => {
+            const [[, params]] = utils.stringifyUrl.mock.calls.slice(-1);
+            expect(params[paramKeys.pageSize]).toEqual(200);
           })
         ));
         test('loads ["all"] for excludedCorseRoles if not includeCourseRoles', () => (

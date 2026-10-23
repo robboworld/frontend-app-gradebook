@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GradebookExport snapshot 1`] = `
+<div
+  aria-label="Export the gradebook"
+  className="robbo-export"
+  role="group"
+>
+  <Button
+    disabled={false}
+    iconBefore="Download"
+    onClick={[MockFunction hooks.exportCsv]}
+    size="sm"
+    variant="outline-primary"
+  >
+    Download CSV
+  </Button>
+  <Button
+    iconBefore="PictureAsPdf"
+    onClick={[MockFunction report.open]}
+    size="sm"
+    variant="outline-primary"
+  >
+    Progress report (PDF)
+  </Button>
+  <span
+    className="robbo-export__status"
+    role="status"
+  />
+  <ReportModal
+    report={
+      {
+        "isOpen": false,
+        "open": [MockFunction report.open],
+      }
+    }
+  />
+</div>
+`;

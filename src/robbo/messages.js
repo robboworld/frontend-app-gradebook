@@ -8,6 +8,21 @@
 import { defineMessages } from '@edx/frontend-platform/i18n';
 
 const messages = defineMessages({
+  gradePoints: {
+    id: 'robbo.gradebook.EditModal.gradePoints',
+    defaultMessage: '{earned} of {possible}',
+    description: 'Original or current grade of the assignment in the grade modal, in points',
+  },
+  gradeNotChanged: {
+    id: 'robbo.gradebook.EditModal.gradeNotChanged',
+    defaultMessage: 'not changed, the original one counts',
+    description: 'Current grade in the grade modal when nobody changed the grade by hand',
+  },
+  filtersTitle: {
+    id: 'robbo.gradebook.filters.title',
+    defaultMessage: 'Filters',
+    description: 'Title of the filter sidebar',
+  },
   allOption: {
     id: 'robbo.gradebook.filters.allOption',
     defaultMessage: 'All',

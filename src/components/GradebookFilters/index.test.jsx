@@ -1,3 +1,4 @@
+// Modifications Copyright (C) 2026 Robbo. See NOTICE at repository root.
 import React from 'react';
 import { shallow } from '@edx/react-unit-test-utils';
 
@@ -5,6 +6,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { Collapsible } from '@openedx/paragon';
 
 import { formatMessage } from 'testUtils';
+import robboMessages from 'robbo/messages';
 
 import AssignmentTypeFilter from './AssignmentTypeFilter';
 import AssignmentFilter from './AssignmentFilter';
@@ -50,6 +52,15 @@ describe('GradebookFilters', () => {
   describe('render', () => {
     test('snapshot', () => {
       expect(el.snapshot).toMatchSnapshot();
+    });
+    test('title of the sidebar', () => {
+      const [title] = el.instance.findByType('h2');
+      expect(title.children[1].el).toEqual(formatMessage(robboMessages.filtersTitle));
+    });
+    test('groups are divided by rules, not spaced', () => {
+      el.instance.findByType(Collapsible).forEach((group) => {
+        expect(group.props.className).toEqual('filter-group');
+      });
     });
     test('Assignment filters', () => {
       expect(el.instance.findByType(Collapsible)[0].children[0]).toMatchObject(shallow(
