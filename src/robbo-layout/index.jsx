@@ -85,6 +85,10 @@ export const RobboHeader = ({
   const { authenticatedUser } = React.useContext(AppContext);
   const [isUserMenuOpen, setIsUserMenuOpen] = React.useState(false);
   const userMenuRef = React.useRef(null);
+  const userMenuToggleRef = React.useRef(null);
+  // Learners: «Что нового» lives in the profile menu (state from the LMS widget, whatsNew.jsx).
+  const [whatsNew, setWhatsNew] = React.useState(null);
+  const whatsNewInMenu = Boolean(whatsNew && whatsNew.inMenu);
   const isNarrowViewport = useMatchMedia(MOBILE_COLLAPSE_NAV_QUERY);
   const collapseMainNav = Boolean(collapseNavIntoUserMenuOnNarrow && isNarrowViewport);
   const intl = useIntl();
@@ -186,7 +190,13 @@ export const RobboHeader = ({
           ))}
         </nav>
         <div className="robbo-layout-header__trailing">
-          {username && <RobboWhatsNew className="robbo-layout-header__whats-new" />}
+          {username && (
+            <RobboWhatsNew
+              className="robbo-layout-header__whats-new"
+              profileToggleRef={showUserDropdown ? userMenuToggleRef : undefined}
+              onChange={setWhatsNew}
+            />
+          )}
           {showStudioLink && (
             <div
               className="robbo-header-studio-link"
@@ -211,6 +221,7 @@ export const RobboHeader = ({
           {showUserDropdown && username && (
             <div className="robbo-layout-user-menu" ref={userMenuRef}>
               <button
+                ref={userMenuToggleRef}
                 className={[
                   'robbo-layout-user-menu__toggle',
                   collapseMainNav ? 'robbo-layout-user-menu__toggle--hamburger' : '',
@@ -235,6 +246,7 @@ export const RobboHeader = ({
                 ) : (
                   <span className="robbo-layout-user-menu__label">{username}</span>
                 )}
+                {whatsNewInMenu && whatsNew.unread > 0 && <span className="robbo-wn-dot" aria-hidden="true" />}
               </button>
               {isUserMenuOpen && (
                 <div
@@ -273,14 +285,35 @@ export const RobboHeader = ({
                     </a>
                   )}
                   {userMenuLinks.map((item) => (
-                    <a
-                      key={`${item.href}-${item.messageId}`}
-                      className="robbo-layout-user-menu__item"
-                      href={item.href}
-                      role="menuitem"
-                    >
-                      <FormattedMessage id={item.messageId} />
-                    </a>
+                    <React.Fragment key={`${item.href}-${item.messageId}`}>
+                      {item.messageId === 'robbo.header.user.signOut' && whatsNewInMenu && (
+                        <a
+                          className="robbo-layout-user-menu__item robbo-layout-user-menu__item--whats-new"
+                          href={`${config.LMS_BASE_URL}/whats-new`}
+                          role="menuitem"
+                          aria-label={whatsNew.label || undefined}
+                          onClick={(event) => {
+                            event.preventDefault();
+                            setIsUserMenuOpen(false);
+                            whatsNew.open();
+                          }}
+                        >
+                          <FormattedMessage id="robbo.header.user.whatsNew" defaultMessage="What's new" />
+                          {whatsNew.unread > 0 && (
+                            <span className="robbo-wn-count" aria-hidden="true">
+                              {whatsNew.unread > 9 ? '9+' : whatsNew.unread}
+                            </span>
+                          )}
+                        </a>
+                      )}
+                      <a
+                        className="robbo-layout-user-menu__item"
+                        href={item.href}
+                        role="menuitem"
+                      >
+                        <FormattedMessage id={item.messageId} />
+                      </a>
+                    </React.Fragment>
                   ))}
                 </div>
               )}

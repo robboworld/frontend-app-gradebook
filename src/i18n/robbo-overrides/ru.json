@@ -117,6 +117,7 @@
   "pgn.Alert.closeLabel": "Закрыть",
   "pgn.Toast.closeLabel": "Закрыть",
   "gradebook.BulkManagementHistoryView.bulkImportError": "Ошибки при обработке файла: {errors}",
+  "robbo.header.user.whatsNew": "Что нового",
   "robbo.gradebook.filters.title": "Фильтры",
   "gradebook.GradesTab.FilterBadges.assignment": "Задание",
   "gradebook.GradesTab.FilterBadges.assignmentGrade": "Оценка за задание",
