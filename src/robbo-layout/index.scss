@@ -1039,3 +1039,20 @@ $robbo-lk-hint-gap: 10px;
     transition: none;
   }
 }
+
+// «Что нового» for learners: dot on the profile button and an item above «Выйти»
+// (`.robbo-wn-dot` / `.robbo-wn-count` styles come from the LMS widget, robbo-whats-new.js).
+.robbo-layout-user-menu__toggle {
+  position: relative;
+}
+
+.robbo-layout-user-menu__toggle--hamburger .robbo-wn-dot {
+  top: 4px;
+  right: 4px;
+}
+
+.robbo-layout-user-menu__item--whats-new {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}

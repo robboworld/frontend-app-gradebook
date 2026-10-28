@@ -11,6 +11,7 @@
   "robbo.header.user.dashboard": "Dashboard",
   "robbo.header.user.profile": "Profile",
   "robbo.header.user.account": "Account",
+  "robbo.header.user.whatsNew": "What's new",
   "robbo.header.user.signOut": "Sign Out",
   "robbo.header.studio.label": "Studio",
   "robbo.header.studio.aria": "Go to Studio"
