@@ -10,7 +10,7 @@
   "gradebook.GradesView.gradebookStepHeading": "Шаг 2. Просмотрите или измените оценки",
   "gradebook.GradesView.editFilterLabel": "Фильтры",
   "gradebook.GradesView.search.label": "Поиск учащегося",
-  "gradebook.GradesView.search.hint": "Поиск по имени пользователя или электронной почте",
+  "gradebook.GradesView.search.hint": "Поиск по ФИО, логину или электронной почте",
   "gradebook.GradesView.scoreViewLabel": "Показывать оценки",
   "gradebook.GradesView.percentOption": "В процентах",
   "gradebook.GradesView.absoluteOption": "В баллах",
