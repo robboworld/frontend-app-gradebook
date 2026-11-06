@@ -6,7 +6,7 @@ import useSearchControlsData from './hooks';
 
 /**
  * Controls for filtering the GradebookTable. Contains the "Edit Filters" button for opening the filter drawer
- * as well as the search box for searching by username/email.
+ * as well as the search box for searching by full name/username/email.
  */
 export const SearchControls = () => {
   const {
