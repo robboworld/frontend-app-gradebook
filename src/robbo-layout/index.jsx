@@ -15,6 +15,7 @@ import { AppContext } from '@edx/frontend-platform/react';
 
 import RobboStackBadge from './stackBadge';
 import RobboWhatsNew from './whatsNew';
+import RobboNotificationsBell from './notificationsBell';
 import './index.scss';
 import RobboNavIcon from './navIcon';
 
@@ -197,6 +198,7 @@ export const RobboHeader = ({
               onChange={setWhatsNew}
             />
           )}
+          {username && <RobboNotificationsBell className="robbo-layout-header__notifications" />}
           {showStudioLink && (
             <div
               className="robbo-header-studio-link"
