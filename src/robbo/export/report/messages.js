@@ -132,6 +132,16 @@ const messages = defineMessages({
     defaultMessage: 'Points',
     description: 'Column of the PDF report: points of the unit',
   },
+  retries: {
+    id: 'robbo.gradebook.report.retries',
+    defaultMessage: 'Retries in total: {count}',
+    description: 'PDF report summary: resubmissions of all problems (submissions after the first), summed',
+  },
+  columnAttempts: {
+    id: 'robbo.gradebook.report.columnAttempts',
+    defaultMessage: 'Attempts',
+    description: 'Column of the PDF report: submissions of the unit\'s problems, summed',
+  },
   columnStatus: {
     id: 'robbo.gradebook.report.columnStatus',
     defaultMessage: 'Status',
