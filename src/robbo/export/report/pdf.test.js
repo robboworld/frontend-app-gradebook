@@ -12,7 +12,7 @@ jest.mock('jspdf', () => ({ jsPDF: 'JsPdf' }));
 jest.mock('jspdf-autotable', () => ({ autoTable: 'autoTable' }));
 
 const progress = (sections, extra = {}) => ({
-  percent: 0.5, passedUnits: 1, units: 2, sections, ...extra,
+  percent: 0.5, passedUnits: 1, units: 2, retries: 4, sections, ...extra,
 });
 const homework = {
   name: 'Homework 1',
@@ -21,10 +21,10 @@ const homework = {
   possible: 4,
   units: [
     {
-      name: 'Unit 1', earned: 2, possible: 2, passed: true,
+      name: 'Unit 1', earned: 2, possible: 2, attempts: 3, passed: true,
     },
     {
-      name: 'Unit 2', earned: 1, possible: 2, passed: false,
+      name: 'Unit 2', earned: 1, possible: 2, attempts: 1, passed: false,
     },
   ],
 };
@@ -92,16 +92,17 @@ describe('PDF report', () => {
   test('tableRows: every unit with its section and subsection, points, status', () => {
     expect(pdf.tableRows(progress(sections), formatMessage, 'ru')).toEqual([
       {
-        section: 'Section 1', subsection: 'Homework 1', unit: 'Unit 1', points: '2 of 2', passed: true,
+        section: 'Section 1', subsection: 'Homework 1', unit: 'Unit 1', points: '2 of 2', attempts: 3, passed: true,
       },
       {
-        section: 'Section 1', subsection: 'Homework 1', unit: 'Unit 2', points: '1 of 2', passed: false,
+        section: 'Section 1', subsection: 'Homework 1', unit: 'Unit 2', points: '1 of 2', attempts: 1, passed: false,
       },
       {
         section: 'Section 1',
         subsection: formatMessage(messages.ungraded, { name: 'Practice' }),
         unit: 'Unit 3',
         points: '0,5 of 1',
+        attempts: 0,
         passed: false,
       },
     ]);
@@ -174,16 +175,18 @@ describe('PDF report', () => {
       expect(texts).toContain(formatMessage(messages.course, { name: 'Robots' }));
       expect(texts).toContain(formatMessage(messages.noActivity));
       expect(texts).toContain(formatMessage(messages.summary, { percent: '50', passed: 1, total: 2 }));
+      expect(texts).toContain(formatMessage(messages.retries, { count: 4 }));
     });
-    test('table: section, subsection, unit, points, status; repeated names greyed, passed in green', () => {
+    test('table: section, subsection, unit, points, attempts, status; repeated names greyed, passed in green', () => {
       build(reports.slice(0, 1));
       const [table] = doc.tables;
       expect(table.head[0]).toEqual([
         formatMessage(messages.columnSection), formatMessage(messages.columnSubsection),
-        formatMessage(messages.columnUnit), formatMessage(messages.columnPoints), formatMessage(messages.columnStatus),
+        formatMessage(messages.columnUnit), formatMessage(messages.columnPoints), formatMessage(messages.columnAttempts),
+        formatMessage(messages.columnStatus),
       ]);
-      expect(table.body[0]).toEqual(['Section 1', 'Homework 1', 'Unit 1', '2 of 2', formatMessage(messages.passed)]);
-      expect(table.body[1][4]).toEqual(formatMessage(messages.notPassed));
+      expect(table.body[0]).toEqual(['Section 1', 'Homework 1', 'Unit 1', '2 of 2', 3, formatMessage(messages.passed)]);
+      expect(table.body[1][5]).toEqual(formatMessage(messages.notPassed));
       const cell = (row, column) => {
         const data = {
           section: 'body', row: { index: row }, column: { index: column }, cell: { styles: {} },
@@ -191,8 +194,8 @@ describe('PDF report', () => {
         table.didParseCell(data);
         return data.cell.styles;
       };
-      expect(cell(0, 4)).toEqual({ textColor: pdf.COLORS.green, fontStyle: 'bold' });
-      expect(cell(1, 4)).toEqual({ textColor: pdf.COLORS.coal });
+      expect(cell(0, 5)).toEqual({ textColor: pdf.COLORS.green, fontStyle: 'bold' });
+      expect(cell(1, 5)).toEqual({ textColor: pdf.COLORS.coal });
       expect(cell(0, 0)).toEqual({});
       expect(cell(1, 0)).toEqual({ textColor: pdf.COLORS.grey });
       expect(cell(1, 1)).toEqual({ textColor: pdf.COLORS.grey });

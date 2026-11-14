@@ -4,8 +4,8 @@
  * Part of the Robbo Open edX MFE overrides. See NOTICE at repository root.
  *
  * The PDF progress report: one learner after another in alphabetical order, each from a new page:
- * name and summary, a table section → subsection → unit with the points and the status of the
- * unit (passed with all of its points only), then a bar chart of the points by subsection.
+ * name and summary, a table section → subsection → unit with the points, the submissions and the
+ * status of the unit (passed with all of its points only), then a bar chart of the points by subsection.
  * jsPDF and the Cyrillic font (DejaVu Sans, fonts/LICENSE-DejaVu.txt) load only when a report is
  * made, so the gradebook itself does not grow.
  */
@@ -62,6 +62,7 @@ export const tableRows = (progress, formatMessage, locale = displayLocale()) => 
     points: formatMessage(messages.points, {
       earned: cellText(unit.earned, locale), possible: cellText(unit.possible, locale),
     }),
+    attempts: unit.attempts || 0,
     passed: unit.passed,
   }))),
 );
@@ -146,12 +147,13 @@ const drawHeader = (doc, {
     passed: progress.passedUnits,
     total: progress.units,
   }), y, { size: 11, style: 'bold' });
+  y = writeLines(doc, formatMessage(messages.retries, { count: progress.retries || 0 }), y, { size: 10 });
   return y + 2;
 };
 
 /** Section → subsection → unit table; a name repeated from the row above is greyed. */
 const drawTable = (doc, autoTable, { rows, formatMessage, startY }) => {
-  const columns = ['section', 'subsection', 'unit', 'points', 'status'];
+  const columns = ['section', 'subsection', 'unit', 'points', 'attempts', 'status'];
   autoTable(doc, {
     startY,
     margin: { left: PAGE.margin, right: PAGE.margin, bottom: PAGE.margin + PAGE.footer },
@@ -162,6 +164,7 @@ const drawTable = (doc, autoTable, { rows, formatMessage, startY }) => {
       formatMessage(messages.columnSubsection),
       formatMessage(messages.columnUnit),
       formatMessage(messages.columnPoints),
+      formatMessage(messages.columnAttempts),
       formatMessage(messages.columnStatus),
     ]],
     body: rows.map((row) => [
@@ -169,6 +172,7 @@ const drawTable = (doc, autoTable, { rows, formatMessage, startY }) => {
       row.subsection,
       row.unit,
       row.points,
+      row.attempts,
       formatMessage(row.passed ? messages.passed : messages.notPassed),
     ]),
     styles: {
@@ -178,10 +182,11 @@ const drawTable = (doc, autoTable, { rows, formatMessage, startY }) => {
       font: FONT, fontStyle: 'bold', fillColor: COLORS.lightGreen, textColor: COLORS.coal,
     },
     columnStyles: {
-      0: { cellWidth: 38 },
-      1: { cellWidth: 44 },
+      0: { cellWidth: 34 },
+      1: { cellWidth: 40 },
       3: { cellWidth: 22, halign: 'right' },
-      4: { cellWidth: 26 },
+      4: { cellWidth: 23, halign: 'right' },
+      5: { cellWidth: 26 },
     },
     didParseCell: (data) => {
       if (data.section !== 'body') {
